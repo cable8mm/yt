@@ -1,0 +1,5 @@
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	.background-image {
+		h1.channel-title {display:none !important;}
+	}
+}

@@ -1,0 +1,31 @@
+/* Large desktop */
+@media (min-width: 1200px) {  }
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    #footer-logo {line-height:95px;}
+	#channel-bar {height:162px;}
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+    .video-player {margin:0 -15px; padding-bottom:61.3%}
+    #footer-logo {line-height:50px;}
+	#channel-bar {height:162px;}
+ }
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    .hidden-phone {display:none}
+    .index-header h1 {font-size:40px;-webkit-text-stroke-width: 0; font-weight:800;}
+	.index-header p {font-size:21px;}
+	#channel-bar {height:162px;}
+
+	.channel-bar-title {line-height:65px;}
+	.slick-prev {left:0;}
+ 	.slick-next {right:0;}
+ 	.slick-slider {padding:0 25px !important;}
+ 	.channel-bar-item img {margin:0 10px;}
+ 	#footer {height:auto;}
+ 	#copyright {height:auto;}
+}
