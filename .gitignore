@@ -447,7 +447,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Dalcomsoft
+# Open Curation
 #SQLITE
 database.sqlite
 #https://github.com/barryvdh/laravel-debugbar
@@ -463,4 +463,5 @@ public/docs/*
 tests/public/docs/
 tests/resources/**
 # End of https://www.toptal.com/developers/gitignore/api/macos,laravel,phpunit,composer,windows,phpstorm,eclipse,visualstudiocode,node
-sey
+
+public/build
