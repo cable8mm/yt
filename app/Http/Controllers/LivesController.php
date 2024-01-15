@@ -24,12 +24,8 @@ class LivesController extends Controller
 
     public function show($videoId)
     {
-        // $youtube    = new Youtube('AIzaSyAH6pKwtkziZbtxBcF_EZnrYPickntDJvc');
-        // $video = $youtube->getVideoInfo($id);
         $video = LiveVideo::where('id', '=', $videoId)->where('is_active', '=', 1)->firstOrFail();
-        // if ($video === null) {
-        //     return response()->
-        // }
+
         $channelVideos = Video::where('channel_id', $video->channel_id)->where('is_active', '=', 1)->where('id', '<>', $videoId)->orderBy('published', 'desc')->take(5)->get();
 
         return view('lives.show', ['video' => $video, 'channelVideos' => $channelVideos]);
