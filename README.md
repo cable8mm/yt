@@ -1,13 +1,18 @@
 # Open Curation - YT
 
+[![build & tests](https://github.com/cable8mm/yt/actions/workflows/tests.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/tests.yml)
+[![coding style](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml)
+[![release date](https://img.shields.io/github/release-date/cable8mm/yt)](https://github.com/cable8mm/yt/releases)
+[![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.2.0-8892BF.svg)](https://github.com/cable8mm/yt)
+
 Open Curation - YT is a web application that allows users to curate YouTube videos into playlists. It is built on the Laravel framework.
 
-Enjoy!
+Enjoy it!
 
 ## Installation
 
 ```sh
-git clone https://github.com/open-curation/yt.git
+git clone https://github.com/cable8mm/yt.git
 
 cd yt
 
