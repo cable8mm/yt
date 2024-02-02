@@ -181,7 +181,7 @@
             </div>
         </div>
         <div id="footer-links">
-            <a href="https://github.com/open-curation/yt" title="{{ __('Github') }}"><span>Github</span></a>
+            <a href="https://github.com/cable8mm/yt" title="{{ __('Github') }}"><span>Github</span></a>
         </div>
         <div id="copyright">
             with Open Curation
