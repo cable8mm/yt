@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Traits\NovaGeneralAuthorized;
+use App\Traits\NovaOutOfControlAuthorized;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -17,6 +18,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Video extends Resource
 {
     use NovaGeneralAuthorized;
+    use NovaOutOfControlAuthorized;
 
     /**
      * The model the resource corresponds to.
