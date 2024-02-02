@@ -1,9 +1,26 @@
-name: coding style php
+name: PHP Linting (Pint)
 
-on: [push]
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - "dependabot/npm_and_yarn/*"
 
 jobs:
-  update:
-    permissions:
-      contents: write
-    uses: open-curation/.github/.github/workflows/coding-style-php.yml@main
+  phplint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: "laravel-pint"
+        uses: aglipanci/laravel-pint-action@0.1.0
+        with:
+          preset: laravel
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: PHP Linting (Pint)
+          skip_fetch: true
