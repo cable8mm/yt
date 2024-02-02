@@ -1,7 +1,7 @@
 # Open Curation - YT
 
-[![build & tests](https://github.com/cable8mm/yt/actions/workflows/tests.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/tests.yml)
-[![coding style](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml)
+[![Tests](https://github.com/cable8mm/yt/actions/workflows/laravel-tests.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/laravel-tests.yml)
+[![PHP Linting (Pint)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml)
 [![release date](https://img.shields.io/github/release-date/cable8mm/yt)](https://github.com/cable8mm/yt/releases)
 [![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.2.0-8892BF.svg)](https://github.com/cable8mm/yt)
 
