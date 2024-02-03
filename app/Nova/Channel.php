@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
@@ -150,6 +151,7 @@ class Channel extends Resource
     {
         return [
             FilledYoutubeChannel::make(),
+            AddYoutubeChannelVideos::make(),
         ];
     }
 }

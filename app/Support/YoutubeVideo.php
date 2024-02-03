@@ -7,6 +7,8 @@ use App\Traits\ArrayAccessOffset;
 use App\Traits\ArrayToObject;
 use App\Traits\Makeable;
 use ArrayAccess;
+use Illuminate\Support\Carbon;
+use InvalidArgumentException;
 use stdClass;
 
 class YoutubeVideo implements ArrayAccess
@@ -20,6 +22,10 @@ class YoutubeVideo implements ArrayAccess
     public function __construct(stdClass $video)
     {
         $videoId = $video->id->videoId ?? $video->id;
+
+        if (empty($videoId)) {
+            throw new InvalidArgumentException();
+        }
 
         $tags = isset($video->snippet->tags) ? implode(',', $video->snippet->tags) : null;
 
@@ -35,7 +41,7 @@ class YoutubeVideo implements ArrayAccess
             'tag' => $tags,
             'duration' => $video->contentDetails->duration ?? null,
             'license' => $video->status->license ?? null,
-            'published' => $video->snippet->publishedAt,
+            'published' => Carbon::create($video->snippet->publishedAt),
         ];
     }
 
