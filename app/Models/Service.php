@@ -9,6 +9,8 @@ class Service extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $casts = [
         'on_service' => 'boolean',
     ];
