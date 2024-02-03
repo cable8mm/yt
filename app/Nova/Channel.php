@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\FilledYoutubeChannelid;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -52,35 +53,58 @@ class Channel extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Service'),
+            BelongsTo::make('Service')->default(1),
 
-            Text::make('Channelid'),
-
-            Text::make('Name'),
-
-            Trix::make('Description'),
+            URL::make('Featured Video Url')
+                ->rules('required', 'max:191')
+                ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914'),
 
             URL::make('Url')
                 ->rules('max:191')
-                ->hideFromIndex(),
+                ->help('eg. https://www.youtube.com/@estellenglish'),
+
+            Text::make('Channelid')
+                ->rules('max:190')
+                ->help('Auto filled after running the action.')
+                ->hideWhenCreating(),
+
+            Text::make('Name')
+                ->help('Auto filled after running the action.')
+                ->hideWhenCreating(),
+
+            Trix::make('Description')
+                ->help('Auto filled after running the action.')
+                ->hideWhenCreating(),
 
             URL::make('Thumbnail Url')
                 ->rules('max:191')
-                ->hideFromIndex(),
+                ->help('Auto filled after running the action.')
+                ->hideFromIndex()
+                ->hideWhenCreating(),
 
             URL::make('Medium Thumbnail Url')
                 ->rules('max:191')
-                ->hideFromIndex(),
+                ->help('Auto filled after running the action.')
+                ->hideFromIndex()
+                ->hideWhenCreating(),
 
             URL::make('Featured Image Url')
                 ->rules('max:191')
-                ->hideFromIndex(),
+                ->help('Auto filled after running the action.')
+                ->hideFromIndex()
+                ->hideWhenCreating(),
 
-            DateTime::make('Last Updated'),
+            DateTime::make('Last Updated')
+                ->help('Auto filled after running the action.')
+                ->exceptOnForms(),
 
-            Boolean::make('Is Auto Active'),
+            Boolean::make('Is Active')
+                ->rules('required')
+                ->hideWhenCreating(),
 
-            Boolean::make('Is Active'),
+            Boolean::make('Is Auto Active')
+                ->rules('required')
+                ->hideWhenCreating(),
 
             HasMany::make('Videos'),
         ];
@@ -123,6 +147,8 @@ class Channel extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            FilledYoutubeChannelid::make(),
+        ];
     }
 }
