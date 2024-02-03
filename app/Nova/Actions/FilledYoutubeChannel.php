@@ -36,6 +36,7 @@ class FilledYoutubeChannel extends Action
             $model->medium_thumbnail_url = $channel->medium_thumbnail_url;
             $model->featured_image_url = $channel->featured_image_url;
             $model->last_updated = now();
+            $model->is_active = true;
             $model->save();
         }
     }
