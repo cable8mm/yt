@@ -38,6 +38,8 @@ jobs:
 
       - name: Copy environment file
         run: cp .env.testing .env
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: Generate app key
         run: php artisan key:generate
