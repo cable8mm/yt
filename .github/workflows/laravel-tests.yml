@@ -38,8 +38,6 @@ jobs:
 
       - name: Copy environment file
         run: cp .env.testing .env
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: Generate app key
         run: php artisan key:generate
@@ -57,4 +55,5 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: vendor/bin/phpunit ./tests
