@@ -19,23 +19,32 @@ class YoutubeVideo implements ArrayAccess
 
     public function __construct(stdClass $video)
     {
+        $videoId = $video->id->videoId ?? $video->id;
+
+        $tags = isset($video->snippet->tags) ? implode(',', $video->snippet->tags) : null;
+
         $this->container = [
             'channel_id' => $video->snippet->channelId,
-            'id' => $video->id,
+            'id' => $videoId,
             'title' => $video->snippet->title,
             'description' => $video->snippet->description,
             'thumbnail_url' => $video->snippet->thumbnails->default->url,
             'medium_thumbnail_url' => $video->snippet->thumbnails->medium->url,
-            'featured_image_url' => $video->snippet->thumbnails->standard->url,
-            'embed_html' => $video->player->embedHtml,
-            'tag' => implode(',', $video->snippet->tags) ?? null,
-            'duration' => $video->contentDetails->duration,
-            'license' => $video->status->license,
+            'featured_image_url' => $video->snippet->thumbnails->standard->url ?? $video->snippet->thumbnails->high->url,
+            'embed_html' => $video->player->embedHtml ?? self::embed($videoId),
+            'tag' => $tags,
+            'duration' => $video->contentDetails->duration ?? null,
+            'license' => $video->status->license ?? null,
             'published' => $video->snippet->publishedAt,
         ];
     }
 
-    public static function makeByUrl(string $url)
+    private static function embed($videoId): string
+    {
+        return '<iframe width="480" height="270" src="//www.youtube.com/embed/'.$videoId.'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    }
+
+    public static function makeByUrl(string $url): YoutubeVideo
     {
         $videoId = Youtube::parseVidFromURL($url);
 
@@ -44,7 +53,7 @@ class YoutubeVideo implements ArrayAccess
         return static::make($video);
     }
 
-    public static function makeById(string $id)
+    public static function makeById(string $id): YoutubeVideo
     {
         $video = Youtube::getVideoInfo($id);
 

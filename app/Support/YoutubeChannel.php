@@ -35,14 +35,14 @@ class YoutubeChannel implements ArrayAccess
         return empty($channel->snippet->customUrl) ? 'https://youtube.com/'.$channel->snippet->customUrl : 'https://youtube.com/channel/'.$channel->id;
     }
 
-    public static function makeById(string $id)
+    public static function makeById(string $id): YoutubeChannel
     {
         $channel = Youtube::getChannelById($id);
 
         return static::make($channel);
     }
 
-    public static function makeByVideo(YoutubeVideo $video)
+    public static function makeByVideo(YoutubeVideo $video): YoutubeChannel
     {
         return static::makeById($video->channel_id);
     }
