@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use App\Traits\NovaGeneralAuthorized;
+use App\Traits\NovaOutOfControlAuthorized;
+use App\Traits\NovaShowOnlyIndexAuthorized;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
@@ -12,6 +14,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Service extends Resource
 {
     use NovaGeneralAuthorized;
+    use NovaOutOfControlAuthorized;
+    use NovaShowOnlyIndexAuthorized;
 
     /**
      * The model the resource corresponds to.
@@ -91,5 +95,10 @@ class Service extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function searchable()
+    {
+        return false;
     }
 }
