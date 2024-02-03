@@ -10,6 +10,8 @@ class Video extends Model
 
     const UPDATED_AT = 'modified';
 
+    protected $guarded = [];
+
     protected $casts = [
         'scheduled_start_time' => 'datetime',
         'scheduled_end_time' => 'datetime',

@@ -2,7 +2,8 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\FilledYoutubeChannelid;
+use App\Nova\Actions\AddYoutubeChannelVideos;
+use App\Nova\Actions\FilledYoutubeChannel;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -11,7 +12,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -59,20 +60,21 @@ class Channel extends Resource
                 ->rules('required', 'max:191')
                 ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914'),
 
-            URL::make('Url')
-                ->rules('max:191')
-                ->help('eg. https://www.youtube.com/@estellenglish'),
-
             Text::make('Channelid')
                 ->rules('max:190')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
+            URL::make('Url')
+                ->rules('max:191')
+                ->hideWhenCreating()
+                ->help('eg. https://www.youtube.com/@estellenglish'),
+
             Text::make('Name')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
-            Trix::make('Description')
+            Textarea::make('Description')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
@@ -148,7 +150,8 @@ class Channel extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            FilledYoutubeChannelid::make(),
+            FilledYoutubeChannel::make(),
+            AddYoutubeChannelVideos::make(),
         ];
     }
 }

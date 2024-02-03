@@ -37,7 +37,7 @@ jobs:
           composer install --prefer-dist --no-interaction --no-progress
 
       - name: Copy environment file
-        run: cp .env.github .env
+        run: cp .env.testing .env
 
       - name: Generate app key
         run: php artisan key:generate
@@ -55,4 +55,5 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: vendor/bin/phpunit ./tests

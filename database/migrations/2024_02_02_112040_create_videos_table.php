@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('channel_id');
-            $table->string('videoId')->unique();
+            $table->string('videoid')->unique();
             $table->string('title');
             $table->text('description');
             $table->string('thumbnail_url');
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('featured_image_url');
             $table->text('embed_html');
             $table->string('tag')->nullable();
-            $table->string('duration');
-            $table->string('license');
+            $table->string('duration')->nullable();
+            $table->string('license')->nullable();
             $table->boolean('has_caption')->default(false);
             $table->boolean('is_live_broadcasting')->default(false);
             $table->dateTime('scheduled_start_time')->nullable();
