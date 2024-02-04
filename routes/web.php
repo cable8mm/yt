@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LivesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideosController;
-use App\Http\Controllers\WidgetsController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -28,7 +27,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/channels/{channel}', [ChannelsController::class, 'show'])->name('channel.show');
     Route::get('/lives', [LivesController::class, 'index'])->name('live');
     Route::get('/lives/{id}', [LivesController::class, 'show'])->name('live.show');
-    Route::get('/widgets/{id}', [WidgetsController::class, 'show'])->name('widget');
 
     Route::get('/dashboard', function () {
         return view('dashboard');
