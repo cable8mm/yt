@@ -465,3 +465,4 @@ tests/resources/**
 # End of https://www.toptal.com/developers/gitignore/api/macos,laravel,phpunit,composer,windows,phpstorm,eclipse,visualstudiocode,node
 
 /auth.json
+/.vscode/settings.json
