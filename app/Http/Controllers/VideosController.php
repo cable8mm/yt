@@ -4,37 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class VideosController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $q = $request->input('q');
         $channelId = $request->input('channel_id');
-        $videoModel = Video::where('is_active', '=', 1);
+        $videoModel = Video::active();
+
         if (! empty($q)) {
             $videoModel = $videoModel->where('title', 'LIKE', '%'.$q.'%');
         }
+
         if (! empty($channelId)) {
             $videoModel = $videoModel->where('channel_id', '=', $channelId);
         }
 
-        $videos = $videoModel->orderBy('published_at', 'desc')->paginate(36);
+        $videos = $videoModel->ordered()->paginate(36);
 
-        return view('videos.index', ['videos' => $videos, 'q' => $q, 'channelId' => $channelId]);
+        return view('videos.index', [
+            'videos' => $videos,
+            'q' => $q,
+            'channelId' => $channelId,
+        ]);
     }
 
-    public function show($videoId)
+    public function show(Video $video): View
     {
-        $video = Video::where('id', '=', $videoId)->where('is_active', '=', 1)->firstOrFail();
+        $channelVideos = Video::where('channel_id', $video->channel_id)->active()->where('id', '<>', $video->id)->ordered()->take(5)->get();
 
-        $channelVideos = Video::where('channel_id', $video->channel_id)->where('is_active', '=', 1)->where('id', '<>', $videoId)->orderBy('published_at', 'desc')->take(5)->get();
-
-        return view('videos.show', ['video' => $video, 'channelVideos' => $channelVideos]);
+        return view('videos.show', [
+            'video' => $video,
+            'channelVideos' => $channelVideos,
+        ]);
     }
 }

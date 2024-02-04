@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/videos', [VideosController::class, 'index'])->name('video');
-Route::get('/videos/{id}', [VideosController::class, 'show'])->name('video.show');
+Route::get('/videos/{video}', [VideosController::class, 'show'])->name('video.show');
 Route::get('/channels', [ChannelsController::class, 'index'])->name('channel');
-Route::get('/channels/{id}', [ChannelsController::class, 'show'])->name('channel.show');
+Route::get('/channels/{channel}', [ChannelsController::class, 'show'])->name('channel.show');
 Route::get('/lives', [LivesController::class, 'index'])->name('live');
 Route::get('/lives/{id}', [LivesController::class, 'show'])->name('live.show');
 Route::get('/widgets/{id}', [WidgetsController::class, 'show'])->name('widget');
