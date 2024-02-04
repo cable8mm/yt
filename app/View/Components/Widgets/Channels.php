@@ -1,19 +1,16 @@
 <?php
 
-namespace App\View\Components\Layout;
+namespace App\View\Components\Widgets;
 
 use App\Models\Channel;
-use App\Models\Video;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class Navigation extends Component
+class Channels extends Component
 {
     private Collection $channels;
-
-    private int $videoCount;
 
     /**
      * Create a new component instance.
@@ -21,8 +18,6 @@ class Navigation extends Component
     public function __construct()
     {
         $this->channels = Channel::active()->ordered()->get();
-
-        $this->videoCount = Video::count();
     }
 
     /**
@@ -30,9 +25,8 @@ class Navigation extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layout.navigation', [
+        return view('components.widgets.channels', [
             'channels' => $this->channels,
-            'videoCount' => $this->videoCount,
         ]);
     }
 }

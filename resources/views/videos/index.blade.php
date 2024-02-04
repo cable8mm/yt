@@ -1,45 +1,21 @@
-@extends('layouts.app')
-@section('title', 'Open Curation Videos' )
-@section('meta_description', 'Show open curated videos' )
-@section('content')
-{{-- <div class="container-fluid">
-    <h1 class="title-ct">Videos</h1>
-</div> --}}
-<x-video.search />
-<div class="container-fluid">
-    <div class="row row-xs-2up row-sm-3up row-md-4up row-lg-6up">
-        @forelse($videos as $video)
-        <div class="col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="thumbnail">
-                <a href="/videos/{{ $video->id }}"><img src="{{ $video->medium_thumbnail_url }}" alt="..."></a>
-                <div class="thumbnail-category">
-                    @if(!empty($video->duration) && $video->duration != 'PT0S')
-                    {{duration($video->duration)}}
-                    @endif
-                </div>
-                <div class="caption">
-                    <h2><a href="/videos/{{ $video->id }}">{{ $video->title}}</a></h2>
-                    <p class="info"><span class="label label-info">Published</span><span class="info-date">{{ date("Y년
-                            m월 d일", strtotime($video->published_at)) }}</span></p>
-                    <p class="info"><span class="label label-info">Channel</span><span class="info-channel">{{
-                            $video->channel->name }}</span></p>
+<x-app-layout>
+    <x-slot name="header">
+        <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            Videos
+        </h1>
+    </x-slot>
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-video.search />
+            <div>
+                <div class="grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-4">
+                    @foreach ($videos as $item)
+                        <x-video-card :$item />
+                    @endforeach
                 </div>
             </div>
+
+            <div class="my-4">{!! $videos->render() !!}</div>
         </div>
-        @empty
-        <div class="container">
-            <div class="row text-center">
-                <p style="font-size:28px;padding:50px 0">{{ __('검색 결과가 존재하지 않습니다.') }}</p>
-                <p style="padding-bottom:100px">{{ __('다른 검색어를 넣어보세요.') }}</p>
-                <style>
-                    ul.pagination {
-                        display: none;
-                    }
-                </style>
-            </div>
-        </div>
-        @endforelse
     </div>
-    <div class="row text-center">{!! $videos->render() !!}</div>
-</div>
-@endsection
+</x-app-layout>
