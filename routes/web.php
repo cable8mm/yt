@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChannelsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LivesController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\WidgetsController;
 use Illuminate\Support\Facades\Route;
@@ -12,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
@@ -27,3 +28,15 @@ Route::get('/channels/{channel}', [ChannelsController::class, 'show'])->name('ch
 Route::get('/lives', [LivesController::class, 'index'])->name('live');
 Route::get('/lives/{id}', [LivesController::class, 'show'])->name('live.show');
 Route::get('/widgets/{id}', [WidgetsController::class, 'show'])->name('widget');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
