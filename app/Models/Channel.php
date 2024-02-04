@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Enums\StatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use InvalidArgumentException;
 use Laravel\Nova\Actions\Actionable;
 
 class Channel extends Model
@@ -32,12 +31,13 @@ class Channel extends Model
         return $this->hasMany(Video::class);
     }
 
-    public function status(string $status): bool
+    public function scopeActive(Builder $query): void
     {
-        if (! StatusEnum::kValid($status)) {
-            throw new InvalidArgumentException('Channel status InvalidArgumentException.');
-        }
+        $query->where('is_active', true);
+    }
 
-        return $this->update(['status' => $status]);
+    public function scopeOrdered(Builder $query): void
+    {
+        $query->orderBy('name', 'asc');
     }
 }

@@ -1,64 +1,30 @@
-@extends('layouts.app')
-@section('title', $channel->name.' 채널' )
-@section('meta_description', $channel->description )
-@section('meta_image', $channel->featured_image_url )
+<x-app-layout>
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-@section('css')
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
-<!-- Add the slick-theme.css if you want default styling -->
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css" />
-@endsection
-
-@section('scripts_bottom')
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-<script>
-    $(function() {
-  $(".slider").slick({autoplay:true});
-});
-</script>
-@endsection
-
-@section('content')
-<div class="background-image" style="
-@if(!empty($videos[0]->thumbnail_url))
-background-image:url({{ $videos[0]->thumbnail_url }})
-@endif
-">
-</div>
-<script src="https://apis.google.com/js/platform.js"></script>
-
-<div class="container-fluid content-over-blur" id="channel-bar" style="position:absolute;">
-    <div class="text-center" style="padding-top:34px;"><img src="{{ $channel->thumbnail_url }}" class="img-thumbnail">
-    </div>
-    <h1 class="title-ct channel-title" style="font-size:14px;margin-top:20px">{{ $channel->name }}</h1>
-    <div class="text-center" style="padding-top:10px;">
-        <div class="g-ytsubscribe" data-channelid="{{ $channel->channelid }}" data-layout="default" data-count="default"
-            data-onytevent="onYtEvent"></div>
-    </div>
-    <!--p class="channel-description text-center">{{ $channel->description }}</p-->
-</div>
-<div class="container-fluid" style="padding-top:250px;">
-    <div class="row row-xs-2up row-sm-3up row-md-4up row-lg-6up">
-        @if(!empty($videos))
-        @foreach($videos as $video)
-        <div class="col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="thumbnail">
-                <a href="/videos/{{ $video->id }}"><img src="{{ $video->medium_thumbnail_url }}" alt="..."></a>
-                <div class="thumbnail-category">
-                    @if(!empty($video->duration) && $video->duration != 'PT0S')
-                    {{duration($video->duration)}}
-                    @endif
-                </div>
-                <div class="caption">
-                    <h2><a href="/videos/{{ $video->id }}">{{ $video->title}}</a></h2>
-                    <p class="info"><span class="label label-info">Published</span><span class="info-date">{{ date("Y년
-                            m월 d일", strtotime($video->published_at)) }}</span></p>
+            <div class="relative h-12 overflow-hidden rounded md:h-48">
+                <div class="duration-700 ease-in-out">
+                    <div class="flex justify-center items-center w-full h-full">
+                        <div class="z-20 px-4 mx-auto text-center">
+                            <div class="text-center py-8">
+                                <img src="{{ $channel->thumbnail_url }}" class="mx-auto block rounded-lg">
+                                <h1 class="text-white pt-2">{{ $channel->name }}</h1>
+                            </div>
+                        </div>
+                        <img src="{!! asset($videos->first()->featured_image_url) !!}" class="absolute z-10 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-lg brightness-75">
+                    </div>
                 </div>
             </div>
+
+            <div>
+                <x-x.widget-title href="{{ route('video') }}">{{ __('Recently Videos') }}</x-x.widget-title>
+                <div class="grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-4">
+                    @foreach($videos as $item)
+                    <x-video-card :$item />
+                    @endforeach
+                </div>
+                <div class="py-4">{!! $videos->render() !!}</div>
+            </div>
         </div>
-        @endforeach
-        @endif
     </div>
-    <div class="row text-center">{!! $videos->render() !!}</div>
-</div>
-@endsection
+</x-app-layout>

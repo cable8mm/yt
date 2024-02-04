@@ -464,5 +464,4 @@ tests/public/docs/
 tests/resources/**
 # End of https://www.toptal.com/developers/gitignore/api/macos,laravel,phpunit,composer,windows,phpstorm,eclipse,visualstudiocode,node
 
-public/build
 /auth.json

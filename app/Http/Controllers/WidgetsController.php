@@ -4,32 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Video;
+use Illuminate\View\View;
 
 class WidgetsController extends Controller
 {
-    /*
-    *
-     * Create a new controller instance.
-     *
-     * @return void
-    */
-    public function __construct()
-    {
-    }
-
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * @param  string  $ids  = 1_2_3
      */
-    public function show($ids)  // $ids = 1_2_3
+    public function show($ids): View
     {
         $idsArray = explode('_', $ids);
         $idk = array_rand($idsArray, 1);
         $id = $idsArray[$idk];
-        $channel = Channel::where('id', $id)->firstOrFail();
-        $videos = Video::where('is_active', 1)->where('is_live_broadcasting', 0)->where('channel_id', $id)->inRandomOrder()->paginate(9);
 
-        return view('widgets.show', ['videos' => $videos, 'channel' => $channel]);
+        $channel = Channel::findOrFail($id);
+
+        $videos = Video::active()->byLiveBroadcasting()->where('channel_id', $id)->inRandomOrder()->paginate(9);
+
+        return view('widgets.show', [
+            'videos' => $videos,
+            'channel' => $channel,
+        ]);
     }
 }

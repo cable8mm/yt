@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Video;
+use Illuminate\View\View;
 
 class ChannelsController extends Controller
 {
@@ -14,16 +15,20 @@ class ChannelsController extends Controller
      */
     public function index()
     {
-        $channels = Channel::where('is_active', 1)->paginate(12);
+        $channels = Channel::active()->paginate(12);
 
-        return view('channels.index', ['channels' => $channels]);
+        return view('channels.index', [
+            'channels' => $channels,
+        ]);
     }
 
-    public function show($id)
+    public function show(Channel $channel): View
     {
-        $channel = Channel::where('id', $id)->firstOrFail();
-        $videos = Video::where('is_active', 1)->where('channel_id', $id)->orderBy('published_at', 'desc')->paginate(24);
+        $videos = Video::active()->where('channel_id', $channel->id)->ordered()->paginate(24);
 
-        return view('channels.show', ['videos' => $videos, 'channel' => $channel]);
+        return view('channels.show', [
+            'videos' => $videos,
+            'channel' => $channel,
+        ]);
     }
 }

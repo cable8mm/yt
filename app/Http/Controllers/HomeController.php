@@ -2,31 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\Video;
 
 class HomeController extends Controller
 {
-    /*
-    *
-     * Create a new controller instance.
-     *
-     * @return void
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $videos = Video::where('is_active', 1)->orderBy('published_at', 'desc')->paginate(18);
-        $feturedVideos = Video::where('is_active', 1)->where('is_live_broadcasting', 0)->orderBy('published_at', 'desc')->take(10)->get();
+        $videos = Video::active()->ordered()->paginate(20);
+        $feturedVideos = Video::active()->byLiveBroadCasting(false)->ordered()->take(10)->get();
+        $channels = Channel::active()->ordered()->get();
 
-        return view('home', ['videos' => $videos, 'feturedVideos' => $feturedVideos]);
+        return view('home', [
+            'videos' => $videos,
+            'feturedVideos' => $feturedVideos,
+            'channels' => $channels,
+        ]);
     }
 }
