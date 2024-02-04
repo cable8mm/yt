@@ -77,16 +77,12 @@ class YoutubeVideoCollectionTest extends TestCase
 
     public function test_cast_carbon(): void
     {
-        if (config('yt.do_youtube_key_test')) {
-            $data = '2024-01-28T20:06:51Z';
+        $data = '2024-01-28T20:06:51Z';
 
-            $expected = '2024-01-28';
+        $expected = '2024-01-28';
 
-            $actual = Carbon::create($data)->format('Y-m-d');
+        $actual = Carbon::create($data)->format('Y-m-d');
 
-            $this->assertEquals($expected, $actual);
-        } else {
-            $this->assertTrue(true);
-        }
+        $this->assertEquals($expected, $actual);
     }
 }
