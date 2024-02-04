@@ -17,7 +17,7 @@ class Channel extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'last_updated' => 'datetime',
+        'last_updated_at' => 'datetime',
         'is_auto_active' => 'boolean',
         'is_active' => 'boolean',
     ];

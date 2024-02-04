@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('medium_thumbnail_url')->nullable();
             $table->string('featured_image_url')->nullable();
             $table->string('status', 20)->default('ready');
-            $table->dateTime('last_updated')->nullable();
+            $table->dateTime('last_updated_at')->nullable();
             $table->boolean('is_auto_active')->default(true);
             $table->boolean('is_active')->default(false);
             $table->timestamps();

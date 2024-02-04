@@ -171,7 +171,7 @@ FWDS3DCovUtils.onReady(function() {
           <div class="caption">
             <h2><a href="/lives/{{ $video->id }}">{{ $video->title}}</a></h2>
             <p class="info"><span class="label label-info">Started</span><span class="info-channel">{{ date("Y년 m월 d일 H시 m분", strtotime($video->scheduled_start_time)) }}</span></p>
-             <p class="info"><span class="label label-info">Published</span><span class="info-date">{{ date("Y년 m월 d일", strtotime($video->published)) }}</span></p>
+             <p class="info"><span class="label label-info">Published</span><span class="info-date">{{ date("Y년 m월 d일", strtotime($video->published_at)) }}</span></p>
             <p class="info"><span class="label label-info">Channel</span><span class="info-channel">{{ $video->channel->name }}</span></p>
           </div>
         </div>

@@ -92,7 +92,7 @@ class Video extends Resource
 
             DateTime::make('Scheduled End Time'),
 
-            DateTime::make('Published')
+            DateTime::make('Published At')
                 ->rules('nullable')
                 ->filterable(),
 

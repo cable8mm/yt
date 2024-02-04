@@ -12,7 +12,7 @@ class LiveVideo extends Model
     protected $casts = [
         'scheduled_start_time' => 'datetime',
         'scheduled_end_time' => 'datetime',
-        'published' => 'datetime',
+        'published_at' => 'datetime',
         'is_active' => 'boolean',
     ];
 

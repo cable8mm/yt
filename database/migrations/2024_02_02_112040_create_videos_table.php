@@ -30,7 +30,7 @@ return new class extends Migration
             $table->boolean('is_live_broadcasting')->default(false);
             $table->dateTime('scheduled_start_time')->nullable();
             $table->dateTime('scheduled_end_time')->nullable();
-            $table->dateTime('published');
+            $table->timestamp('published_at');
             $table->boolean('is_active')->default(true);
             $table->boolean('is_podcast_active')->default(false);
             $table->timestamps();
