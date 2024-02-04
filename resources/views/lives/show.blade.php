@@ -80,7 +80,7 @@
                     <h4 class="media-heading channel-video-title"><a href="/videos/{{ $video->id }}">{{
                             $video->title}}</a></h4>
                     <p class="info"><span class="label label-info">Published</span><span class="info-date">{{ date("Y년
-                            m월 d일", strtotime($video->published)) }}</span></p>
+                            m월 d일", strtotime($video->published_at)) }}</span></p>
                 </div>
             </div>
             @endforeach

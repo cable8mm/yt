@@ -12,38 +12,67 @@ class YoutubeVideoCollectionTest extends TestCase
 {
     public function test_make(): void
     {
-        $expected = ChannelSeeder::$seedChannelId;
+        if (config('yt.do_youtube_key_test')) {
+            $expected = ChannelSeeder::$seedChannelId;
 
-        $youtubeVideoCollection = YoutubeVideoCollection::make($expected, now());
+            $youtubeVideoCollection = YoutubeVideoCollection::make($expected, now());
 
-        $actual = $youtubeVideoCollection->channelId;
+            $actual = $youtubeVideoCollection->channelId;
 
-        $this->assertEquals($expected, $actual);
+            $this->assertEquals($expected, $actual);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_fetchOne(): void
     {
-        $channelId = ChannelSeeder::$seedChannelId;
+        if (config('yt.do_youtube_key_test')) {
+            $channelId = ChannelSeeder::$seedChannelId;
 
-        $actual = YoutubeVideoCollection::makeByFrom($channelId, now())->fetchOnce()->get();
+            $actual = YoutubeVideoCollection::makeByFrom($channelId, now())->fetchOnce()->get();
 
-        $this->assertNotEmpty($actual);
+            $this->assertNotEmpty($actual);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_youtube_library(): void
     {
-        $videos = Youtube::searchChannelVideos('', ChannelSeeder::$seedChannelId, 2, 'date', ['id', 'snippet'], now())['results'];
+        if (config('yt.do_youtube_key_test')) {
+            $videos = Youtube::searchChannelVideos('', ChannelSeeder::$seedChannelId, 2, 'date', ['id', 'snippet'], now())['results'];
 
-        $this->assertNotEmpty($videos);
+            $this->assertNotEmpty($videos);
+        } else {
+            $this->assertTrue(true);
+        }
+    }
+
+    public function test_fetch_once(): void
+    {
+        if (config('yt.do_youtube_key_test')) {
+            $channelId = ChannelSeeder::$seedChannelId;
+
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($channelId, now())->fetchOnce()->get();
+
+            $this->assertNotEmpty($youtubeVideoCollection);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_fetch_all(): void
     {
-        $channelId = ChannelSeeder::$seedChannelId;
+        if (config('yt.do_youtube_key_test')) {
+            $channelId = ChannelSeeder::$seedChannelId;
 
-        $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($channelId, now())->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($channelId, now())->fetch()->get();
 
-        $this->assertNotEmpty($youtubeVideoCollection);
+            $this->assertNotEmpty($youtubeVideoCollection);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_cast_carbon(): void

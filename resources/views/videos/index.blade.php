@@ -38,7 +38,7 @@
                 <div class="caption">
                     <h2><a href="/videos/{{ $video->id }}">{{ $video->title}}</a></h2>
                     <p class="info"><span class="label label-info">Published</span><span class="info-date">{{ date("Y년
-                            m월 d일", strtotime($video->published)) }}</span></p>
+                            m월 d일", strtotime($video->published_at)) }}</span></p>
                     <p class="info"><span class="label label-info">Channel</span><span class="info-channel">{{
                             $video->channel->name }}</span></p>
                 </div>

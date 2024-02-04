@@ -29,10 +29,9 @@ return new class extends Migration
             $table->boolean('has_caption')->default(false);
             $table->dateTime('scheduled_start_time')->nullable();
             $table->dateTime('scheduled_end_time')->nullable();
-            $table->dateTime('published');
+            $table->dateTime('published_at');
             $table->boolean('is_active')->default(false);
-            $table->dateTime('created')->nullable();
-            $table->dateTime('modified')->nullable();
+            $table->timestamps();
         });
     }
 

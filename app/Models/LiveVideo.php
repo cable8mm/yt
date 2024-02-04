@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LiveVideo extends Model
 {
-    const CREATED_AT = 'created';
-
-    const UPDATED_AT = 'modified';
+    use HasFactory;
 
     protected $casts = [
         'scheduled_start_time' => 'datetime',
         'scheduled_end_time' => 'datetime',
-        'published' => 'datetime',
+        'published_at' => 'datetime',
         'is_active' => 'boolean',
     ];
 

@@ -21,8 +21,7 @@ return new class extends Migration
             $table->text('object');
             $table->boolean('is_imported')->default(false);
             $table->boolean('is_active')->default(true);
-            $table->dateTime('created')->nullable();
-            $table->dateTime('modified')->nullable();
+            $table->timestamps();
         });
     }
 
