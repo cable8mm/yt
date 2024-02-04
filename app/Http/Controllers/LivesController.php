@@ -26,7 +26,7 @@ class LivesController extends Controller
     {
         $video = LiveVideo::where('id', '=', $videoId)->where('is_active', '=', 1)->firstOrFail();
 
-        $channelVideos = Video::where('channel_id', $video->channel_id)->where('is_active', '=', 1)->where('id', '<>', $videoId)->orderBy('published', 'desc')->take(5)->get();
+        $channelVideos = Video::where('channel_id', $video->channel_id)->where('is_active', '=', 1)->where('id', '<>', $videoId)->orderBy('published_at', 'desc')->take(5)->get();
 
         return view('lives.show', ['video' => $video, 'channelVideos' => $channelVideos]);
     }

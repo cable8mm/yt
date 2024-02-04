@@ -24,7 +24,7 @@ class VideosController extends Controller
             $videoModel = $videoModel->where('channel_id', '=', $channelId);
         }
 
-        $videos = $videoModel->orderBy('published', 'desc')->paginate(36);
+        $videos = $videoModel->orderBy('published_at', 'desc')->paginate(36);
 
         return view('videos.index', ['videos' => $videos, 'q' => $q, 'channelId' => $channelId]);
     }
@@ -33,7 +33,7 @@ class VideosController extends Controller
     {
         $video = Video::where('id', '=', $videoId)->where('is_active', '=', 1)->firstOrFail();
 
-        $channelVideos = Video::where('channel_id', $video->channel_id)->where('is_active', '=', 1)->where('id', '<>', $videoId)->orderBy('published', 'desc')->take(5)->get();
+        $channelVideos = Video::where('channel_id', $video->channel_id)->where('is_active', '=', 1)->where('id', '<>', $videoId)->orderBy('published_at', 'desc')->take(5)->get();
 
         return view('videos.show', ['video' => $video, 'channelVideos' => $channelVideos]);
     }

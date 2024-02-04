@@ -22,7 +22,7 @@ class ChannelsController extends Controller
     public function show($id)
     {
         $channel = Channel::where('id', $id)->firstOrFail();
-        $videos = Video::where('is_active', 1)->where('channel_id', $id)->orderBy('published', 'desc')->paginate(24);
+        $videos = Video::where('is_active', 1)->where('channel_id', $id)->orderBy('published_at', 'desc')->paginate(24);
 
         return view('channels.show', ['videos' => $videos, 'channel' => $channel]);
     }
