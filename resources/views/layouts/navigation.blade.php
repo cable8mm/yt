@@ -46,6 +46,24 @@
                     <a href="{{ route('video') }}"
                         class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">{{ __('Videos') }}</a>
                 </li>
+                @if (LaravelLocalization::setLocale() == 'en')
+                    <li>
+                        <a href="{{ LaravelLocalization::getLocalizedURL('ko') }}"
+                            class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">{{ '한글' }}</a>
+                    </li>
+                @elseif(LaravelLocalization::setLocale() == 'ko')
+                    <li>
+                        <a href="{{ LaravelLocalization::getLocalizedURL('en') }}"
+                            class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">{{ 'English' }}</a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ LaravelLocalization::getLocalizedURL('ko') }}"
+                            class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">{{ '한글' }}</a>
+                        <a href="{{ LaravelLocalization::getLocalizedURL('en') }}"
+                            class="-ml-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">{{ 'English' }}</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

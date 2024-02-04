@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\WidgetsController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,25 +19,25 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/videos', [VideosController::class, 'index'])->name('video');
+    Route::get('/videos/{video}', [VideosController::class, 'show'])->name('video.show');
+    Route::get('/channels', [ChannelsController::class, 'index'])->name('channel');
+    Route::get('/channels/{channel}', [ChannelsController::class, 'show'])->name('channel.show');
+    Route::get('/lives', [LivesController::class, 'index'])->name('live');
+    Route::get('/lives/{id}', [LivesController::class, 'show'])->name('live.show');
+    Route::get('/widgets/{id}', [WidgetsController::class, 'show'])->name('widget');
 
-Route::get('/videos', [VideosController::class, 'index'])->name('video');
-Route::get('/videos/{video}', [VideosController::class, 'show'])->name('video.show');
-Route::get('/channels', [ChannelsController::class, 'index'])->name('channel');
-Route::get('/channels/{channel}', [ChannelsController::class, 'show'])->name('channel.show');
-Route::get('/lives', [LivesController::class, 'index'])->name('live');
-Route::get('/lives/{id}', [LivesController::class, 'show'])->name('live.show');
-Route::get('/widgets/{id}', [WidgetsController::class, 'show'])->name('widget');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 });
-
 require __DIR__.'/auth.php';
