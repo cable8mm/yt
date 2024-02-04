@@ -49,8 +49,7 @@
                     samgu.lee</a> ❤️ Laravel.
             </span>
             <div class="flex mt-4 sm:justify-center sm:mt-0">
-                <a href="{{ url('https://github.com/cable8mm/korean-job') }}"
-                    class="text-gray-500 hover:text-gray-900 ms-5">
+                <a href="{{ url('https://github.com/cable8mm/yt') }}" class="text-gray-500 hover:text-gray-900 ms-5">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
