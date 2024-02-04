@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "alaouy/youtube": "^2.2",
+        "blade-ui-kit/blade-heroicons": "^2.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-lang/locales": "^2.5",
         "laravel/framework": "^10.0",
