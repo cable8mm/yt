@@ -33,8 +33,7 @@ return new class extends Migration
             $table->dateTime('published');
             $table->boolean('is_active')->default(true);
             $table->boolean('is_podcast_active')->default(false);
-            $table->dateTime('created')->nullable();
-            $table->dateTime('modified')->nullable();
+            $table->timestamps();
         });
     }
 

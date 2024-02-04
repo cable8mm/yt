@@ -31,8 +31,7 @@ return new class extends Migration
             $table->dateTime('scheduled_end_time')->nullable();
             $table->dateTime('published');
             $table->boolean('is_active')->default(false);
-            $table->dateTime('created')->nullable();
-            $table->dateTime('modified')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Nova\Actions\Actionable;
 
 class Video extends Model
 {
-    const CREATED_AT = 'created';
-
-    const UPDATED_AT = 'modified';
+    use Actionable, HasFactory;
 
     protected $guarded = [];
 

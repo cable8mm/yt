@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use InvalidArgumentException;
+use Laravel\Nova\Actions\Actionable;
 
 class Channel extends Model
 {
-    use HasFactory;
-
-    const CREATED_AT = 'created';
-
-    const UPDATED_AT = 'modified';
+    use Actionable, HasFactory;
 
     protected $guarded = [];
 
@@ -21,13 +22,22 @@ class Channel extends Model
         'is_active' => 'boolean',
     ];
 
-    public function service()
+    public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }
 
-    public function videos()
+    public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
+    }
+
+    public function status(string $status): bool
+    {
+        if (! StatusEnum::kValid($status)) {
+            throw new InvalidArgumentException('Channel status InvalidArgumentException.');
+        }
+
+        return $this->update(['status' => $status]);
     }
 }
