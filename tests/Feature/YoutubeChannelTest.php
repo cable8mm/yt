@@ -11,21 +11,29 @@ class YoutubeChannelTest extends TestCase
 {
     public function test_factory_makeById(): void
     {
-        $channelId = ChannelSeeder::$seedChannelId;
+        if (config('yt.do_youtube_key_test')) {
+            $channelId = ChannelSeeder::$seedChannelId;
 
-        $expect = YoutubeChannel::makeById($channelId);
+            $expect = YoutubeChannel::makeById($channelId);
 
-        $this->assertNotEmpty($expect);
+            $this->assertNotEmpty($expect);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_factory_makeByVideo(): void
     {
-        $videoId = ChannelSeeder::$seedVideoId;
+        if (config('yt.do_youtube_key_test')) {
+            $videoId = ChannelSeeder::$seedVideoId;
 
-        $video = YoutubeVideo::makeById($videoId);
+            $video = YoutubeVideo::makeById($videoId);
 
-        $expect = YoutubeChannel::makeByVideo($video);
+            $expect = YoutubeChannel::makeByVideo($video);
 
-        $this->assertNotEmpty($expect);
+            $this->assertNotEmpty($expect);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 }

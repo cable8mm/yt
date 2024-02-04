@@ -14,30 +14,42 @@ class YoutubeVideoTest extends TestCase
      */
     public function test_factory_makeByUrl(): void
     {
-        $url = ChannelSeeder::$featuredVideoUrl;
+        if (config('yt.do_youtube_key_test')) {
+            $url = ChannelSeeder::$featuredVideoUrl;
 
-        $expect = YoutubeVideo::makeByUrl($url);
+            $expect = YoutubeVideo::makeByUrl($url);
 
-        $this->assertNotEmpty($expect);
+            $this->assertNotEmpty($expect);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_factory_makeById(): void
     {
-        $videoId = ChannelSeeder::$seedVideoId;
+        if (config('yt.do_youtube_key_test')) {
+            $videoId = ChannelSeeder::$seedVideoId;
 
-        $expect = YoutubeVideo::makeById($videoId);
+            $expect = YoutubeVideo::makeById($videoId);
 
-        $this->assertNotEmpty($expect);
+            $this->assertNotEmpty($expect);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_factory_make_from_list(): void
     {
-        $videos = Youtube::searchChannelVideos('', ChannelSeeder::$seedChannelId, 1, 'date', ['id', 'snippet'], now())['results'];
+        if (config('yt.do_youtube_key_test')) {
+            $videos = Youtube::searchChannelVideos('', ChannelSeeder::$seedChannelId, 1, 'date', ['id', 'snippet'], now())['results'];
 
-        foreach ($videos as $video) {
-            $expect = YoutubeVideo::make($video);
+            foreach ($videos as $video) {
+                $expect = YoutubeVideo::make($video);
 
-            $this->assertNotEmpty($expect);
+                $this->assertNotEmpty($expect);
+            }
+        } else {
+            $this->assertTrue(true);
         }
     }
 }
