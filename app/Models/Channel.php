@@ -35,4 +35,9 @@ class Channel extends Model
     {
         $query->where('is_active', true);
     }
+
+    public function scopeOrdered(Builder $query): void
+    {
+        $query->orderBy('name', 'asc');
+    }
 }

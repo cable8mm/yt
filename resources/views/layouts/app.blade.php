@@ -80,23 +80,7 @@
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/videos') }}">Videos({{number_format($videoCount)}})</a></li>
-                    <li class="dropdown">
-                        <a href="{{ url('/channels') }}" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">Channels({{count($partners)}}) <span
-                                class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @foreach($partners as $partner)
-                            <li><a href="/channels/{{ $partner->id }}">{{ $partner->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
-                    <li><a href="{{ url('/lives') }}">Live <span class="label label-danger"
-                                style="margin-top:-4px;">NEW</span></a></li>
-                </ul>
-
+                <x-layout.navigation />
                 <!-- Right Side Of Navbar -->
                 <!--ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
@@ -153,40 +137,7 @@
         }
     </style>
 
-    <footer class="main-footer">
-        <div id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col col-xs-12 col-sm-4 col-md-3 col-lg-3 hidden-phone">
-                        <h4 id="footer-logo">Open Curation</h4>
-                    </div>
-                    <div class="col col-xs-12 col-sm-8 col-md-3 col-lg-3" style="padding-top:10px">
-                        <h3>Open Curation / YT</h3>
-                        <p>What are you think about us?</p>
-                        <ul>
-                            <li style="display:list-item">{{ __('Curation Channels') }} {{count($partners)}}</li>
-                            <li style="display:list-item">{{ __('Videos') }} {{number_format($videoCount)}}</li>
-                        </ul>
-                    </div>
-                    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-top:10px">
-                        <h3>{{ __('Channels') }}</h3>
-                        <ul>
-                            @foreach($partners as $partner)
-                            <li><a href="/channels/{{ $partner->id }}"><img src="{{ $partner->thumbnail_url }}"
-                                        alt="{{ $partner->name }}" title="{{ $partner->name }}"></a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="footer-links">
-            <a href="https://github.com/cable8mm/yt" title="{{ __('Github') }}"><span>Github</span></a>
-        </div>
-        <div id="copyright">
-            &copy; {{ date('Y') }} made by samgu.lee ❤️ Laravel
-        </div>
-    </footer>
+    <x-layout.footer />
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
         integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous">
