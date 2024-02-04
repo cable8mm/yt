@@ -184,7 +184,7 @@
             <a href="https://github.com/cable8mm/yt" title="{{ __('Github') }}"><span>Github</span></a>
         </div>
         <div id="copyright">
-            with Open Curation
+            &copy; {{ date('Y') }} made by samgu.lee ❤️ Laravel
         </div>
     </footer>
     <!-- JavaScripts -->
