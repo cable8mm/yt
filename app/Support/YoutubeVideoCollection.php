@@ -26,12 +26,12 @@ class YoutubeVideoCollection implements Countable, Iterator
      * Set video count while youtube api has been called.
      * Why it has existed is for testing infinite calls.
      */
-    private int $youtubeFetchCount = 1;
+    private int $youtubeFetchCount = 50;
 
     /**
      * Set max count to prevent infinite call to youtube api.
      */
-    private int $maxFetchCount = 2;
+    private int $maxFetchCount = 10;
 
     /**
      * Current fetch count. If $maxFetchCount <= $currentFetchCount then calling stop() must be call.
@@ -90,7 +90,7 @@ class YoutubeVideoCollection implements Countable, Iterator
         }
 
         // fetch
-        $videos = Youtube::searchChannelVideos('', $this->channelId, $this->youtubeFetchCount, 'date', ['id', 'snippet']);
+        $videos = Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->from->toRfc3339String());
 
         // if last then stop
         if (empty($videos)) {
@@ -105,7 +105,7 @@ class YoutubeVideoCollection implements Countable, Iterator
         }
 
         // set last time, because next time it must be used as start time for fetching
-        $this->from = Carbon::create(end($this->container)->published)->subDay();
+        $this->from = Carbon::create(end($this->container)->published)->subSecond();
 
         // increment fetch count
         $this->incrementCurrentFetchCount();
