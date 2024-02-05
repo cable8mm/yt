@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "alaouy/youtube": "^2.2",
+        "cable8mm/youtube": "^3.0",
         "blade-ui-kit/blade-heroicons": "^2.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-lang/locales": "^2.5",

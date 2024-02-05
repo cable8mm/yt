@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Alaouy\Youtube\Facades\Youtube;
 use App\Support\YoutubeVideoCollection;
+use Cable8mm\Youtube\Facades\Youtube;
 use Database\Seeders\ChannelSeeder;
 use Tests\TestCase;
 

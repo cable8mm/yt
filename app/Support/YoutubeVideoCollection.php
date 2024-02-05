@@ -2,8 +2,8 @@
 
 namespace App\Support;
 
-use Alaouy\Youtube\Facades\Youtube;
 use App\Traits\Makeable;
+use Cable8mm\Youtube\Facades\Youtube;
 use Countable;
 use Illuminate\Support\Carbon;
 use Iterator;
@@ -12,19 +12,50 @@ class YoutubeVideoCollection implements Countable, Iterator
 {
     use Makeable;
 
-    private $position = 0;
+    /**
+     * For Iterator interface
+     */
+    private int $position = 0;
 
-    const FETCH_COUNT = 2;
-
+    /**
+     * For data storage and Countable interface
+     */
     public array $container = [];
+
+    /**
+     * Set video count while youtube api has been called.
+     * Why it has existed is for testing infinite calls.
+     */
+    private int $youtubeFetchCount = 1;
+
+    /**
+     * Set max count to prevent infinite call to youtube api.
+     */
+    private int $maxFetchCount = 2;
+
+    /**
+     * Current fetch count. If $maxFetchCount <= $currentFetchCount then calling stop() must be call.
+     */
+    private int $currentFetchCount = 0;
 
     public string $channelId;
 
+    /**
+     * Set start datetime while youtube api has been called.
+     */
     private Carbon $from;
 
+    /**
+     * Set end datetime while youtube api has been called.
+     */
     private ?Carbon $to;
 
-    private $keepgoing = true;
+    /**
+     * It depend on whether youtube api is called or not.
+     * This property can only control by stop(), and view by isStop().
+     * You never view and control directly.
+     */
+    private bool $keepgoing = true;
 
     public function __construct(string $channelId, Carbon $from, ?Carbon $to = null)
     {
@@ -34,30 +65,64 @@ class YoutubeVideoCollection implements Countable, Iterator
         $this->position = 0;
     }
 
-    public function fetchOnce(): YoutubeVideoCollection
+    public function fetch(): static
     {
-        if (! $this->keepgoing) {
+        while (true) {
+            $this->fetchOnce();
+
+            if ($this->isStop()) {
+                break;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Fetch from youtube channel videos just one time.
+     * Probably privait should be set, because why it is public is for testing.
+     */
+    public function fetchOnce(): static
+    {
+        // guard
+        if ($this->isStop()) {
             return $this;
         }
 
-        $videos = Youtube::searchChannelVideos('', $this->channelId, self::FETCH_COUNT, 'date', ['id', 'snippet'], $this->from)['results'];
+        // fetch
+        $videos = Youtube::searchChannelVideos('', $this->channelId, $this->youtubeFetchCount, 'date', ['id', 'snippet']);
 
+        // if last then stop
         if (empty($videos)) {
             $this->stop();
 
             return $this;
         }
 
+        // merge all videos to container
         foreach ($videos as $video) {
             $this->container[] = YoutubeVideo::make($video);
         }
 
-        $this->from = Carbon::create(end($this->container)->published);
+        // set last time, because next time it must be used as start time for fetching
+        $this->from = Carbon::create(end($this->container)->published)->subDay();
+
+        // increment fetch count
+        $this->incrementCurrentFetchCount();
 
         return $this;
     }
 
-    public function stop()
+    private function incrementCurrentFetchCount()
+    {
+        $this->currentFetchCount++;
+
+        if ($this->currentFetchCount >= $this->maxFetchCount) {
+            $this->stop();
+        }
+    }
+
+    public function stop(): static
     {
         $this->keepgoing = false;
 
@@ -69,30 +134,17 @@ class YoutubeVideoCollection implements Countable, Iterator
         return ! $this->keepgoing;
     }
 
-    public function fetch(): YoutubeVideoCollection
-    {
-        while (true) {
-            $this->fetchOnce();
-
-            if (! $this->keepgoing) {
-                break;
-            }
-        }
-
-        return $this;
-    }
-
     public function get(): array
     {
         return $this->container;
     }
 
-    public static function makeByFrom(string $channelId, Carbon $from): YoutubeVideoCollection
+    public static function makeByFrom(string $channelId, Carbon $from): static
     {
         return static::make($channelId, $from);
     }
 
-    public static function makeByFromTo(string $channelId, Carbon $from, Carbon $to): YoutubeVideoCollection
+    public static function makeByFromTo(string $channelId, Carbon $from, Carbon $to): static
     {
         return static::make($channelId, $from, $to);
     }
