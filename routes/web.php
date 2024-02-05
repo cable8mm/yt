@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ChannelsController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LivesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideosController;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +24,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/videos/{video}', [VideosController::class, 'show'])->name('video.show');
     Route::get('/channels', [ChannelsController::class, 'index'])->name('channel');
     Route::get('/channels/{channel}', [ChannelsController::class, 'show'])->name('channel.show');
-    Route::get('/lives', [LivesController::class, 'index'])->name('live');
-    Route::get('/lives/{id}', [LivesController::class, 'show'])->name('live.show');
 
     Route::get('/dashboard', function () {
         return view('dashboard');
