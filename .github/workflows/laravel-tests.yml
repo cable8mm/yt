@@ -37,7 +37,7 @@ jobs:
           composer install --prefer-dist --no-interaction --no-progress
 
       - name: Copy environment file
-        run: cp .env.testing .env
+        run: cp .env.github .env
 
       - name: Generate app key
         run: php artisan key:generate
