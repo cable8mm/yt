@@ -7,7 +7,7 @@
                 src="{{ $channel->medium_thumbnail_url }}" alt="Bonnie image" /></a>
         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $channel->name }}</h5>
         <span class="text-sm text-gray-500 dark:text-gray-400">
-            <x-youtube-subscriber-count channelid="{{ $channel->channelid }}" />
+            <x-youtube-subscriber-count :channelid="$channel->channelid" />
         </span>
         <div class="flex mt-4 md:mt-6">
             <a href="{{ route('channel.show', $channel->id) }}"
