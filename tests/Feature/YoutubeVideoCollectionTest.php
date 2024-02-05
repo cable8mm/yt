@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use Alaouy\Youtube\Facades\Youtube;
 use App\Support\YoutubeVideoCollection;
 use Database\Seeders\ChannelSeeder;
-use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class YoutubeVideoCollectionTest extends TestCase
@@ -73,16 +72,5 @@ class YoutubeVideoCollectionTest extends TestCase
         } else {
             $this->assertTrue(true);
         }
-    }
-
-    public function test_cast_carbon(): void
-    {
-        $data = '2024-01-28T20:06:51Z';
-
-        $expected = '2024-01-28';
-
-        $actual = Carbon::create($data)->format('Y-m-d');
-
-        $this->assertEquals($expected, $actual);
     }
 }
