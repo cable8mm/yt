@@ -11,7 +11,10 @@
                                 <h1 class="text-white pt-2">{{ $channel->name }}</h1>
                             </div>
                         </div>
-                        <img src="{!! asset($videos->first()->featured_image_url) !!}" class="absolute z-10 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-lg brightness-75">
+                        @isset($videos->first()->featured_image_url)
+                            <img src="{!! asset($videos->first()->featured_image_url) !!}"
+                                class="absolute z-10 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-lg brightness-75">
+                        @endisset
                     </div>
                 </div>
             </div>
@@ -19,8 +22,8 @@
             <div>
                 <x-x.widget-title href="{{ route('video') }}">{{ __('Recently Videos') }}</x-x.widget-title>
                 <div class="grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-4">
-                    @foreach($videos as $item)
-                    <x-video-card :$item />
+                    @foreach ($videos as $item)
+                        <x-video-card :$item />
                     @endforeach
                 </div>
                 <div class="py-4">{!! $videos->render() !!}</div>
