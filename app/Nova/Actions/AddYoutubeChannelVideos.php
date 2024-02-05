@@ -28,7 +28,13 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
         foreach ($models as $model) {
             $model->status(StatusEnum::running());
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($model->channelid, now())->fetch()->get();
+            try {
+                $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($model->channelid, now())->fetch()->get();
+            } catch (Exception $e) {
+                $model->status(StatusEnum::failed());
+
+                $this->markAsFailed($model, $e);
+            }
 
             foreach ($youtubeVideoCollection as $video) {
                 try {
