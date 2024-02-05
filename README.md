@@ -2,14 +2,19 @@
 
 [![Tests](https://github.com/cable8mm/yt/actions/workflows/laravel-tests.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/laravel-tests.yml)
 [![PHP Linting (Pint)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml)
+![Static Badge](https://img.shields.io/badge/Laravel-10.x-orange)
 [![release date](https://img.shields.io/github/release-date/cable8mm/yt)](https://github.com/cable8mm/yt/releases)
 [![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.2.0-8892BF.svg)](https://github.com/cable8mm/yt)
+![Static Badge](https://img.shields.io/badge/i18n-en%2Cko-blue)
+![GitHub License](https://img.shields.io/github/license/cable8mm/yt)
 
 Open Curation - YT is a web application that allows users to curate YouTube videos into playlists. It is built on the Laravel framework.
 
 Enjoy it!
 
 ## Installation
+
+Cloning & Setting:
 
 ```sh
 git clone https://github.com/cable8mm/yt.git
@@ -26,7 +31,7 @@ valet secure
 Make `yt` database in MySQL. After database setup:
 
 ```sh
-php artisan migrate:fresh --seed --force
+composer migrate
 
 npm install
 
@@ -34,6 +39,38 @@ valet open
 ```
 
 visit : https://yt.test
+
+Database:
+
+- Database : korean-job
+
+```sh
+php artisan migrate
+
+php artisan nova:user
+
+# make Name, Email Address, Password and create user
+```
+
+Mail:
+
+```sh
+brew install mailpit
+
+brew services start mailpit
+```
+
+Visit to http://localhost:8025
+
+## Maintenance
+
+### Add languages
+
+```sh
+php artisan lang:add af
+```
+
+Refer to [this link](https://laravel-lang.com/available-locales-list.html#lists-available-locales-am) about it.
 
 ## Test
 
@@ -54,6 +91,15 @@ Live:
 ```sh
 npm run build
 ```
+
+## CI/CD
+
+For testing third party integration, you should make github repository secrets as belows.
+
+*Laravel Nova* is required,
+
+- NOVA_PASSWORD
+- NOVA_USERNAME
 
 ## License
 
