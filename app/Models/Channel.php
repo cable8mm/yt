@@ -40,4 +40,11 @@ class Channel extends Model
     {
         $query->orderBy('name', 'asc');
     }
+
+    public function status(string $status): bool
+    {
+        return $this->update([
+            'status' => $status,
+        ]);
+    }
 }

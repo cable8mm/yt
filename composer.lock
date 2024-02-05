@@ -4,81 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fcf6fc056805947232f1522ec44e1da",
+    "content-hash": "52ac769fb4890d7d8221b25e6abbfe6d",
     "packages": [
         {
-            "name": "alaouy/youtube",
-            "version": "v2.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/alaouy/Youtube.git",
-                "reference": "6cd66013b18a958b85f4e71f72fb6fac7dc25c14"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/alaouy/Youtube/zipball/6cd66013b18a958b85f4e71f72fb6fac7dc25c14",
-                "reference": "6cd66013b18a958b85f4e71f72fb6fac7dc25c14",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": "^7.0|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.1|^9.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Alaouy\\Youtube\\YoutubeServiceProvider"
-                    ],
-                    "aliases": {
-                        "Youtube": "Alaouy\\Youtube\\Facades\\Youtube"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Alaouy\\Youtube\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mustapha Alaouy",
-                    "email": "alaouym@gmail.com"
-                }
-            ],
-            "description": "Laravel PHP Facade/Wrapper for the Youtube Data API v3",
-            "keywords": [
-                "alaouy",
-                "api",
-                "laravel",
-                "video",
-                "youtube"
-            ],
-            "support": {
-                "issues": "https://github.com/alaouy/Youtube/issues",
-                "source": "https://github.com/alaouy/Youtube/tree/v2.2.5"
-            },
-            "time": "2020-12-14T16:14:02+00:00"
-        },
-        {
             "name": "archtechx/enums",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/archtechx/enums.git",
-                "reference": "fc428d533d815178ff494eba85fa28797ca7995e"
+                "reference": "a99ee1a7e083736c22d3a44fd3a988e7e472cf96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/enums/zipball/fc428d533d815178ff494eba85fa28797ca7995e",
-                "reference": "fc428d533d815178ff494eba85fa28797ca7995e",
+                "url": "https://api.github.com/repos/archtechx/enums/zipball/a99ee1a7e083736c22d3a44fd3a988e7e472cf96",
+                "reference": "a99ee1a7e083736c22d3a44fd3a988e7e472cf96",
                 "shasum": ""
             },
             "require": {
@@ -109,9 +48,9 @@
             "description": "Helpers for making PHP enums more lovable.",
             "support": {
                 "issues": "https://github.com/archtechx/enums/issues",
-                "source": "https://github.com/archtechx/enums/tree/v1.0.0"
+                "source": "https://github.com/archtechx/enums/tree/v1.0.1"
             },
-            "time": "2024-01-12T22:24:43+00:00"
+            "time": "2024-01-28T17:52:47+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -375,6 +314,77 @@
                 }
             ],
             "time": "2023-09-23T21:17:11+00:00"
+        },
+        {
+            "name": "cable8mm/youtube",
+            "version": "v3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cable8mm/Youtube.git",
+                "reference": "d2121358cd7ee9adbcf6f6c7c9ca805303b5fed1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cable8mm/Youtube/zipball/d2121358cd7ee9adbcf6f6c7c9ca805303b5fed1",
+                "reference": "d2121358cd7ee9adbcf6f6c7c9ca805303b5fed1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "illuminate/support": "^8.0|^9.0|^10.0",
+                "nesbot/carbon": "^2.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "orchestra/testbench": "^6.23|^7.0|^8.0",
+                "phpunit/phpunit": "^9.3",
+                "vlucas/phpdotenv": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Cable8mm\\Youtube\\YoutubeServiceProvider"
+                    ],
+                    "aliases": {
+                        "Youtube": "Cable8mm\\Youtube\\Facades\\Youtube"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cable8mm\\Youtube\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mustapha Alaouy",
+                    "email": "alaouym@gmail.com"
+                },
+                {
+                    "name": "Sam Lee",
+                    "email": "cable8mm@gmail.com"
+                }
+            ],
+            "description": "Renew Laravel PHP Facade/Wrapper for the Youtube Data API v3",
+            "keywords": [
+                "alaouy",
+                "api",
+                "cable8mm",
+                "laravel",
+                "video",
+                "youtube"
+            ],
+            "support": {
+                "issues": "https://github.com/cable8mm/Youtube/issues",
+                "source": "https://github.com/cable8mm/Youtube/tree/v3.1.1"
+            },
+            "time": "2024-02-05T07:57:16+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -8850,16 +8860,16 @@
         },
         {
             "name": "laravel-lang/lang",
-            "version": "14.2.8",
+            "version": "14.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/lang.git",
-                "reference": "94068cd2fd4543c67834b4d71c5aea271783fd82"
+                "reference": "8a69448df6b6cd12bd2ef4878689acbc6bbf94f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/94068cd2fd4543c67834b4d71c5aea271783fd82",
-                "reference": "94068cd2fd4543c67834b4d71c5aea271783fd82",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/8a69448df6b6cd12bd2ef4878689acbc6bbf94f0",
+                "reference": "8a69448df6b6cd12bd2ef4878689acbc6bbf94f0",
                 "shasum": ""
             },
             "require": {
@@ -8906,7 +8916,7 @@
                 "issues": "https://github.com/Laravel-Lang/lang/issues",
                 "source": "https://github.com/Laravel-Lang/lang"
             },
-            "time": "2024-01-30T01:44:36+00:00"
+            "time": "2024-02-05T01:58:49+00:00"
         },
         {
             "name": "laravel-lang/publisher",

@@ -2,11 +2,11 @@
 
 namespace App\Support;
 
-use Alaouy\Youtube\Facades\Youtube;
 use App\Traits\ArrayAccessOffset;
 use App\Traits\ArrayToObject;
 use App\Traits\Makeable;
 use ArrayAccess;
+use Cable8mm\Youtube\Facades\Youtube;
 use stdClass;
 
 class YoutubeChannel implements ArrayAccess

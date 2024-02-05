@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Enums\StatusEnum;
 use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
 use App\Traits\NovaGeneralAuthorized;
@@ -11,6 +12,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
@@ -77,6 +79,10 @@ class Channel extends Resource
             Textarea::make('Description')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
+
+            Status::make('Status')
+                ->loadingWhen(StatusEnum::loadingWhen())
+                ->failedWhen(StatusEnum::failedWhen()),
 
             URL::make('Thumbnail Url')
                 ->rules('max:191')

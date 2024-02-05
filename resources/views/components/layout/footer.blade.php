@@ -44,13 +44,11 @@
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
         <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center">© {{ date('Y') }} <a href="https://stack.palgle.com/"
-                    class="hover:underline">&copy; {{ date('Y') }} made by
-                    samgu.lee</a> ❤️ Laravel.
+            <span class="text-sm text-gray-500 sm:text-center">&copy; {{ date('Y') }} made by <a
+                    href="https://stack.palgle.com/" class="hover:underline">samgu.lee</a> ❤️ Laravel.
             </span>
             <div class="flex mt-4 sm:justify-center sm:mt-0">
-                <a href="{{ url('https://github.com/cable8mm/korean-job') }}"
-                    class="text-gray-500 hover:text-gray-900 ms-5">
+                <a href="{{ url('https://github.com/cable8mm/yt') }}" class="text-gray-500 hover:text-gray-900 ms-5">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
