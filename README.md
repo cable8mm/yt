@@ -2,10 +2,10 @@
 
 [![Tests](https://github.com/cable8mm/yt/actions/workflows/laravel-tests.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/laravel-tests.yml)
 [![PHP Linting (Pint)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml/badge.svg)](https://github.com/cable8mm/yt/actions/workflows/coding-style-php.yml)
-![Static Badge](https://img.shields.io/badge/Laravel-10.x-orange)
+![Static Badge](https://img.shields.io/badge/Laravel-^10.0-orange)
 [![release date](https://img.shields.io/github/release-date/cable8mm/yt)](https://github.com/cable8mm/yt/releases)
 [![minimum PHP version](https://img.shields.io/badge/php-%3E%3D_8.2.0-8892BF.svg)](https://github.com/cable8mm/yt)
-![Static Badge](https://img.shields.io/badge/i18n-en%2Cko-blue)
+![Static Badge](https://img.shields.io/badge/Language-en%2Cko-blue)
 ![GitHub License](https://img.shields.io/github/license/cable8mm/yt)
 
 Open Curation - YT is a web application that allows users to curate YouTube videos into playlists. It is built on the Laravel framework.
