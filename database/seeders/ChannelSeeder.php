@@ -7,11 +7,11 @@ use Illuminate\Database\Seeder;
 
 class ChannelSeeder extends Seeder
 {
-    public static string $featuredVideoUrl = 'https://www.youtube.com/watch?v=djV11Xbc914';
+    public static string $featuredVideoUrl = 'https://www.youtube.com/watch?v=fxJNfxIu0p0';
 
-    public static string $seedVideoId = 'rie-hPVJ7Sw';
+    public static string $seedVideoId = 'fxJNfxIu0p0';
 
-    public static string $seedChannelId = 'UCk1SpWNzOs4MYmr0uICEntg';
+    public static string $seedChannelId = 'UCNgEhs22fJzCTvl99AHlg7A';
 
     /**
      * Run the database seeds.
