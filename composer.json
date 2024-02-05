@@ -73,7 +73,7 @@
             "@php artisan view:clear"
         ],
         "test": [
-            "./vendor/bin/phpunit tests"
+            "@php artisan test"
         ],
         "lint": [
             "./vendor/bin/pint"
