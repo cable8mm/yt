@@ -30,8 +30,7 @@
                                 <a href="https://youtube.com/channel/{{ $item->channelid }}"><img
                                         class="h-auto max-w-full rounded-lg mx-auto" src="{{ $item->thumbnail_url }}"
                                         alt=""></a>
-                                <img class="mt-2" alt="YouTube Channel Subscribers"
-                                    src="https://img.shields.io/youtube/channel/subscribers/{{ $item->channelid }}">
+                                <x-youtube-subscriber-count :channelId="$item->channelid" />
                             </div>
                         @endforeach
                     </div>

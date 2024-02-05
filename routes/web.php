@@ -38,4 +38,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 });
+
+Route::get('/go/youtube/{channel}', function ($channel) {
+    return redirect('https://youtube.com/channel/'.$channel);
+})->name('youtube');
+
 require __DIR__.'/auth.php';
