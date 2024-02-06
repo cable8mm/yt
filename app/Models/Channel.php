@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Nova\Actions\Actionable;
 
@@ -21,11 +21,6 @@ class Channel extends Model
         'is_active' => 'boolean',
     ];
 
-    public function service(): BelongsTo
-    {
-        return $this->belongsTo(Service::class);
-    }
-
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
@@ -39,6 +34,11 @@ class Channel extends Model
     public function scopeOrdered(Builder $query): void
     {
         $query->orderBy('name', 'asc');
+    }
+
+    public function scopeShouldCrawled(Builder $query): void
+    {
+        $query->whereNotIn('status', StatusEnum::end());
     }
 
     public function status(string $status): bool
