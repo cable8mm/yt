@@ -13,7 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 
-class PastCrawlYoutubeVideos implements ShouldQueue
+class FutureCrawlYoutubeVideos implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -30,24 +30,20 @@ class PastCrawlYoutubeVideos implements ShouldQueue
      */
     public function handle(): void
     {
-        $shouldCrawlChannel = Channel::shouldPastCrawled()->first();
-
-        if (empty($shouldCrawlChannel)) {
-            return;
-        }
+        $channel = Channel::active()->random()->first();
 
         try {
             DB::beginTransaction();
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($shouldCrawlChannel->channelid, $shouldCrawlChannel->youtube_published_before_at)->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByTo($channel->channelid, $channel->youtube_published_after_at)->fetchOnce()->get();
 
             if (empty($youtubeVideoCollection)) {
-                $shouldCrawlChannel->pastCrawlEnd();
+                $channel->futureCrawlEnd(now());
             }
 
             foreach ($youtubeVideoCollection as $video) {
                 $videos[] = [
-                    'channel_id' => $shouldCrawlChannel->id,
+                    'channel_id' => $channel->id,
                     'videoid' => $video->id,
                     'title' => $video->title,
                     'description' => $video->description,
@@ -65,8 +61,8 @@ class PastCrawlYoutubeVideos implements ShouldQueue
             // In order to insert massive, It use not a elequent but a query builder for more efficiently.
             Video::insert($videos);
 
-            $shouldCrawlChannel->update([
-                'youtube_published_before_at' => end($youtubeVideoCollection)->published_at,
+            $channel->update([
+                'youtube_published_after_at' => end($youtubeVideoCollection)->published_at,
             ]);
 
             DB::commit();
