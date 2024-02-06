@@ -100,6 +100,8 @@ Refer to [this link](https://laravel-lang.com/available-locales-list.html#lists-
 composer test
 ```
 
+Also error reporting has sent to [Sentry.io](https://cable8mm.sentry.io)
+
 ## Build
 
 Development:
