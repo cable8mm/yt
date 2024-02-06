@@ -17,12 +17,22 @@ class PastCrawlYoutubeVideos implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public Channel $channel;
+
+    public $tries = 5;
+
+    public $maxExceptions = 2;
+
+    public $timeout = 120;
+
+    public $uniqueFor = 3600;
+
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(Channel $channel)
     {
-        //
+        $this->channel = $channel->withoutRelations();
     }
 
     /**
@@ -30,24 +40,22 @@ class PastCrawlYoutubeVideos implements ShouldQueue
      */
     public function handle(): void
     {
-        $shouldCrawlChannel = Channel::shouldPastCrawled()->first();
-
-        if (empty($shouldCrawlChannel)) {
+        if (empty($this->channel)) {
             return;
         }
 
         try {
             DB::beginTransaction();
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($shouldCrawlChannel->channelid, $shouldCrawlChannel->youtube_published_before_at)->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($this->channel->channelid, $this->channel->youtube_published_before_at)->fetchOnce()->get();
 
             if (empty($youtubeVideoCollection)) {
-                $shouldCrawlChannel->pastCrawlEnd();
+                $this->channel->pastCrawlEnd();
             }
 
             foreach ($youtubeVideoCollection as $video) {
                 $videos[] = [
-                    'channel_id' => $shouldCrawlChannel->id,
+                    'channel_id' => $this->channel->id,
                     'videoid' => $video->id,
                     'title' => $video->title,
                     'description' => $video->description,
@@ -65,7 +73,7 @@ class PastCrawlYoutubeVideos implements ShouldQueue
             // In order to insert massive, It use not a elequent but a query builder for more efficiently.
             Video::insert($videos);
 
-            $shouldCrawlChannel->update([
+            $this->channel->update([
                 'youtube_published_before_at' => end($youtubeVideoCollection)->published_at,
             ]);
 
@@ -73,5 +81,10 @@ class PastCrawlYoutubeVideos implements ShouldQueue
         } catch (Exception $e) {
             DB::rollBack();
         }
+    }
+
+    public function uniqueId(): string
+    {
+        return $this->channel->id;
     }
 }

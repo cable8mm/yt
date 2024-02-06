@@ -17,12 +17,22 @@ class FutureCrawlYoutubeVideos implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public Channel $channel;
+
+    public $tries = 1;
+
+    public $maxExceptions = 2;
+
+    public $timeout = 120;
+
+    public $uniqueFor = 3600;
+
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(Channel $channel)
     {
-        //
+        $this->channel = $channel->withoutRelations();
     }
 
     /**
@@ -30,20 +40,20 @@ class FutureCrawlYoutubeVideos implements ShouldQueue
      */
     public function handle(): void
     {
-        $channel = Channel::active()->random()->first();
+        $$this->channel = Channel::active()->random()->first();
 
         try {
             DB::beginTransaction();
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByTo($channel->channelid, $channel->youtube_published_after_at)->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByTo($$this->channel->channelid, $$this->channel->youtube_published_after_at)->fetchOnce()->get();
 
             if (empty($youtubeVideoCollection)) {
-                $channel->futureCrawlEnd(now());
+                $$this->channel->futureCrawlEnd(now());
             }
 
             foreach ($youtubeVideoCollection as $video) {
                 $videos[] = [
-                    'channel_id' => $channel->id,
+                    'channel_id' => $$this->channel->id,
                     'videoid' => $video->id,
                     'title' => $video->title,
                     'description' => $video->description,
@@ -61,7 +71,7 @@ class FutureCrawlYoutubeVideos implements ShouldQueue
             // In order to insert massive, It use not a elequent but a query builder for more efficiently.
             Video::insert($videos);
 
-            $channel->update([
+            $$this->channel->update([
                 'youtube_published_after_at' => end($youtubeVideoCollection)->published_at,
             ]);
 
@@ -69,5 +79,10 @@ class FutureCrawlYoutubeVideos implements ShouldQueue
         } catch (Exception $e) {
             DB::rollBack();
         }
+    }
+
+    public function uniqueId(): string
+    {
+        return $this->channel->id;
     }
 }
