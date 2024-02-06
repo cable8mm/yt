@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,8 @@ class Channel extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'last_updated_at' => 'datetime',
+        'youtube_published_after_at' => 'datetime',
+        'youtube_published_before_at' => 'datetime',
         'is_auto_active' => 'boolean',
         'is_active' => 'boolean',
     ];
@@ -36,15 +36,22 @@ class Channel extends Model
         $query->orderBy('name', 'asc');
     }
 
-    public function scopeShouldCrawled(Builder $query): void
+    public function scopeShouldPastCrawled(Builder $query): void
     {
-        $query->whereNotIn('status', StatusEnum::end());
+        $query->whereNotNull('youtube_published_before_at');
     }
 
     public function status(string $status): bool
     {
         return $this->update([
             'status' => $status,
+        ]);
+    }
+
+    public function pastCrawlEnd()
+    {
+        $this->update([
+            'youtube_published_before_at' => null,
         ]);
     }
 }
