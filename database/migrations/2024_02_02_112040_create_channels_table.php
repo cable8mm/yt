@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->string('featured_video_url');
+            $table->string('featured_video_url')->nullable()->comment('It make retrive channel information');
             $table->string('url')->nullable();
-            $table->text('origin_object')->nullable();
             $table->string('channelid')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
