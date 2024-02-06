@@ -7,7 +7,6 @@ use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
@@ -56,8 +55,6 @@ class Channel extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Service')->default(1),
-
             URL::make('Featured Video Url')
                 ->rules('required', 'max:191')
                 ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914'),
@@ -80,10 +77,6 @@ class Channel extends Resource
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
-            Status::make('Status')
-                ->loadingWhen(StatusEnum::loadingWhen())
-                ->failedWhen(StatusEnum::failedWhen()),
-
             URL::make('Thumbnail Url')
                 ->rules('max:191')
                 ->help('Auto filled after running the action.')
@@ -102,15 +95,18 @@ class Channel extends Resource
                 ->hideFromIndex()
                 ->hideWhenCreating(),
 
-            DateTime::make('Last Updated')
+            Status::make('Status')
+                ->loadingWhen(StatusEnum::loadingWhen())
+                ->failedWhen(StatusEnum::failedWhen()),
+
+            DateTime::make('Youtube Published After At')
                 ->help('Auto filled after running the action.')
                 ->exceptOnForms(),
 
-            Boolean::make('Is Active')
-                ->rules('required')
-                ->hideWhenCreating(),
+            DateTime::make('Youtube Published Before At')
+                ->help('If it is set, it will be crawling all videos automatically in the past.'),
 
-            Boolean::make('Is Auto Active')
+            Boolean::make('Is Active')
                 ->rules('required')
                 ->hideWhenCreating(),
 

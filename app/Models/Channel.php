@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
 
 class Channel extends Model
@@ -16,15 +16,11 @@ class Channel extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'last_updated_at' => 'datetime',
+        'youtube_published_after_at' => 'datetime',
+        'youtube_published_before_at' => 'datetime',
         'is_auto_active' => 'boolean',
         'is_active' => 'boolean',
     ];
-
-    public function service(): BelongsTo
-    {
-        return $this->belongsTo(Service::class);
-    }
 
     public function videos(): HasMany
     {
@@ -41,10 +37,29 @@ class Channel extends Model
         $query->orderBy('name', 'asc');
     }
 
+    public function scopeShouldPastCrawled(Builder $query): void
+    {
+        $query->whereNotNull('youtube_published_before_at');
+    }
+
     public function status(string $status): bool
     {
         return $this->update([
             'status' => $status,
+        ]);
+    }
+
+    public function pastCrawlEnd(): void
+    {
+        $this->update([
+            'youtube_published_before_at' => null,
+        ]);
+    }
+
+    public function futureCrawlEnd(Carbon $youtubePublishedAfterAt): void
+    {
+        $this->update([
+            'youtube_published_after_at' => $youtubePublishedAfterAt,
         ]);
     }
 }

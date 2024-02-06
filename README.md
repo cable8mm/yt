@@ -10,7 +10,13 @@
 
 Open Curation - YT is a web application that allows users to curate YouTube videos into playlists. It is built on the Laravel framework.
 
-Enjoy it!
+You only need to perform one task to maintain the website, and that is to input the channel ID. Even if you don't know it, that's okay. The system will help you retrieve the channel ID from the video URL. Additionally, the system will update channel videos automatically.
+
+I believe that this is fantastic. Enjoy!
+
+## Preview
+
+![Backend Screenshot](docs/assets/yt_backend_screenshot_1.png)
 
 ## Installation
 
@@ -62,9 +68,25 @@ brew services start mailpit
 
 Visit to http://localhost:8025
 
-## Maintenance
+## Development
 
-### Add languages
+### Queue and Schedule
+
+If you want to make schedulers work,
+
+```sh
+php artisan schedule:work
+```
+
+and job,
+
+```sh
+php artisan queue:work
+```
+
+It can be worked asynchronously, such as registering massive numbers of YouTube videos.
+
+### How to add languages
 
 ```sh
 php artisan lang:add af

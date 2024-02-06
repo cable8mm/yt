@@ -17,7 +17,6 @@ class ChannelFactory extends Factory
     public function definition(): array
     {
         return [
-            'service_id' => 1,
             'featured_video_url' => fake()->url(),
         ];
     }

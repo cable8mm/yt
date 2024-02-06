@@ -78,6 +78,7 @@
         "lint": [
             "./vendor/bin/pint"
         ],
+        "log": "tail -f ./storage/logs/laravel.log",
         "migrate": [
             "@php artisan migrate:fresh --seed"
         ]

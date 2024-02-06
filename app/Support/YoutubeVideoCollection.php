@@ -6,6 +6,7 @@ use App\Traits\Makeable;
 use Cable8mm\Youtube\Facades\Youtube;
 use Countable;
 use Illuminate\Support\Carbon;
+use InvalidArgumentException;
 use Iterator;
 
 class YoutubeVideoCollection implements Countable, Iterator
@@ -57,8 +58,12 @@ class YoutubeVideoCollection implements Countable, Iterator
      */
     private bool $keepgoing = true;
 
-    public function __construct(string $channelId, Carbon $from, ?Carbon $to = null)
+    public function __construct(string $channelId, ?Carbon $from = null, ?Carbon $to = null)
     {
+        if ($from == null && $to == null) {
+            throw new InvalidArgumentException();
+        }
+
         $this->channelId = $channelId;
         $this->from = $from;
         $this->to = $to;
@@ -90,7 +95,9 @@ class YoutubeVideoCollection implements Countable, Iterator
         }
 
         // fetch
-        $videos = Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->from->toRfc3339String());
+        $videos = $this->from === null ?
+            Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->to->toRfc3339String(), true)
+            : Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->from->toRfc3339String());
 
         // if last then stop
         if (empty($videos)) {
@@ -142,6 +149,11 @@ class YoutubeVideoCollection implements Countable, Iterator
     public static function makeByFrom(string $channelId, Carbon $from): static
     {
         return static::make($channelId, $from);
+    }
+
+    public static function makeByTo(string $channelId, Carbon $to): static
+    {
+        return static::make($channelId, null, $to);
     }
 
     public static function makeByFromTo(string $channelId, Carbon $from, Carbon $to): static
