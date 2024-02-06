@@ -30,8 +30,12 @@ class PastCrawlYoutubeVideos implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(Channel $channel)
+    public function __construct(?Channel $channel = null)
     {
+        if ($channel === null) {
+            $channel = Channel::active()->shouldPastCrawled()->random()->first();
+        }
+
         $this->channel = $channel->withoutRelations();
     }
 
