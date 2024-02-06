@@ -3,6 +3,9 @@
 namespace App\Nova;
 
 use App\Enums\ImportFileEnum;
+use App\Nova\Actions\ImportChannelExcelAction;
+use App\Nova\Actions\ImportVideoChannelExcelAction;
+use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\File;
@@ -14,6 +17,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ImportFile extends Resource
 {
+    use NovaGeneralAuthorized;
+
     /**
      * The model the resource corresponds to.
      *
@@ -123,6 +128,9 @@ class ImportFile extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new ImportChannelExcelAction())->showInline(),
+            (new ImportVideoChannelExcelAction())->showInline(),
+        ];
     }
 }
