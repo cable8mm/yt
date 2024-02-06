@@ -22,12 +22,8 @@
             <div class="container">
                 <div class="grid grid-cols-3 gap-4">
                     <div class="col-span-2 bg-white dark:bg-black">
-                        <div>
-                            <iframe class="w-full aspect-video"
-                                src="https://www.youtube.com/embed/{!! $video->videoId !!}" title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                        <div class="aspect-w-16 aspect-h-9">
+                            {!! $video->embed_html !!}
                         </div>
                         <div class="p-4">
                             <div class="fb-like" data-href="{{ route('video.show', $video->id) }}" data-width="345"
