@@ -23,7 +23,7 @@ class VideoChannelImport implements SkipsEmptyRows, ToModel, WithHeadingRow, Wit
     public function rules(): array
     {
         return [
-            'featured_video_url' => ['required', 'string'],
+            'video_url' => ['required', 'string'],
         ];
     }
 }
