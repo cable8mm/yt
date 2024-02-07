@@ -7,18 +7,6 @@
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-breadcrumb :paths="[['Videos', route('video')], [$video->title, route('video.show', $video->id)]]" />
-            <div id="fb-root"></div>
-            <script>
-                (function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) return;
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.7&appId=1534412176862824";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
-            </script>
-
             <div class="container">
                 <div class="grid grid-cols-3 gap-4">
                     <div class="col-span-2 bg-white dark:bg-black">
@@ -31,28 +19,24 @@
                                 data-share="true"></div>
                             <p class="pb-4">{!! nl2br($video->description) !!}</p>
                             <div class="bg-slate-400 p-4 rounded-lg">
-                                <h2>정보</h2>
+                                <h2>{{ __('Informations') }}</h2>
                                 @if (!empty($video->duration))
                                     <div class="">
-                                        Duration : {{ duration($video->duration) }}
+                                        {{ __('Duration') }} : {{ duration($video->duration) ?? 'Caculating...' }}
                                     </div>
                                 @endif
                                 <div class="">
-                                    Lisence : {{ $video->license }}
+                                    {{ __('Lisence') }} : {{ $video->license ?? '(maybe) Youtube License' }}
                                 </div>
                                 @if (!empty($video->Definition))
                                     <div class="">
-                                        Definition : {{ $video->definition }}
+                                        {{ __('Definition') }} : {{ $video->definition ?? 'Caculating...' }}
                                     </div>
                                 @endif
                                 <div class="">
-                                    자막 : {{ empty($video->has_caption) ? '없음' : '있음' }}
+                                    {{ _('Subtitle') }} : {{ empty($video->has_caption) ? 'none' : 'include' }}
                                 </div>
                             </div>
-                        </div>
-                        <div class="wrap">
-                            <div class="fb-comments" data-href="{{ route('video.show', $video->id) }}" data-width="100%"
-                                data-numposts="10"></div>
                         </div>
                     </div>
                     <div class="">
@@ -168,8 +152,10 @@
                                 <script type="text/javascript" src="https://connect.facebook.net/en_US/fbadnw.js" async></script>
                             </div>
                         </div>
-                        <div class=""><img src="{{ $video->channel->featured_image_url }}"
-                                class="w-full rounded-lg"></div>
+                        <div class="">
+                            <a href="{{ route('channel.show', $video->channel_id) }}"><img
+                                    src="{{ $video->channel->featured_image_url }}" class="w-full rounded-lg"></a>
+                        </div>
                         <x-x.widget-title>{{ __('Channel\'s Recent Videos') }}</x-x.widget-title>
                         @foreach ($channelVideos as $item)
                             <x-videos.side.video-card :item="$item" />
