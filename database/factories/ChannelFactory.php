@@ -18,6 +18,8 @@ class ChannelFactory extends Factory
     {
         return [
             'featured_video_url' => fake()->url(),
+            'channelid' => fake()->word(),
+            'is_active' => true,
         ];
     }
 }

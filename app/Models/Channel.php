@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Actions\Actionable;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Searchable;
 
 class Channel extends Model
 {
-    use Actionable, HasFactory;
+    use Actionable, HasFactory, Searchable;
 
     protected $guarded = [];
 
@@ -42,6 +44,22 @@ class Channel extends Model
         $query->whereNotNull('youtube_published_before_at');
     }
 
+    /**
+     * MUST require withCount('videos')
+     */
+    public function scopeHasVideo(Builder $query): void
+    {
+        $query->where('videos_count', '>', 0);
+    }
+
+    /**
+     * MUST require withCount('videos')
+     */
+    public function scopeHasntVideo(Builder $query): void
+    {
+        $query->where('videos_count', 0);
+    }
+
     public function status(string $status): bool
     {
         return $this->update([
@@ -61,5 +79,38 @@ class Channel extends Model
         $this->update([
             'youtube_published_after_at' => $youtubePublishedAfterAt,
         ]);
+    }
+
+    /* SCOUT require methods */
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs(): string
+    {
+        return 'channels_index';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    #[SearchUsingFullText(['description'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int) $this->id,
+            'name' => (string) $this->name,
+            'description' => (string) $this->description,
+        ];
+    }
+
+    /**
+     * Determine if the model should be searchable.
+     */
+    public function shouldBeSearchable(): bool
+    {
+        return $this->is_active;
     }
 }

@@ -10,23 +10,20 @@ class VideosController extends Controller
 {
     public function index(Request $request): View
     {
-        $q = $request->input('q');
+        $query = $request->input('query');
         $channelId = $request->input('channel_id');
-        $videoModel = Video::active();
 
-        if (! empty($q)) {
-            $videoModel = $videoModel->where('title', 'LIKE', '%'.$q.'%');
+        $videoModel = empty($channelId) ? new Video() : Video::where('channel_id', $channelId);
+
+        if (! empty($query)) {
+            $videoModel = $videoModel->search($query);
         }
 
-        if (! empty($channelId)) {
-            $videoModel = $videoModel->where('channel_id', '=', $channelId);
-        }
-
-        $videos = $videoModel->ordered()->paginate(36);
+        $videos = $videoModel->paginate(36);
 
         return view('videos.index', [
             'videos' => $videos,
-            'q' => $q,
+            'query' => $query,
             'channelId' => $channelId,
         ]);
     }

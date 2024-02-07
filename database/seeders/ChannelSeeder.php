@@ -20,6 +20,7 @@ class ChannelSeeder extends Seeder
     {
         Channel::factory()->state([
             'featured_video_url' => self::$featuredVideoUrl,
+            'is_active' => true,
         ])->create();
     }
 }

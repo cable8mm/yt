@@ -34,7 +34,7 @@
                                     </div>
                                 @endif
                                 <div class="">
-                                    {{ _('Subtitle') }} : {{ empty($video->has_caption) ? 'none' : 'include' }}
+                                    {{ __('Subtitle') }} : {{ empty($video->has_caption) ? 'none' : 'include' }}
                                 </div>
                             </div>
                         </div>
