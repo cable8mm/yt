@@ -26,6 +26,7 @@ class VideoFactory extends Factory
             'featured_image_url' => fake()->image(),
             'embed_html' => '<p></p>',
             'published_at' => fake()->dateTime(),
+            'is_active' => true,
         ];
     }
 }
