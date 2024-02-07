@@ -23,7 +23,7 @@ class ChannelImport implements SkipsEmptyRows, ToModel, WithHeadingRow, WithVali
     public function rules(): array
     {
         return [
-            'channelid' => ['required', 'string'],
+            'channel_id' => ['required', 'string'],
         ];
     }
 }
