@@ -39,6 +39,8 @@ class FilledYoutubeChannel extends Action implements ShouldQueue
             $model->is_active = true;
             $model->save();
         }
+
+        return $models;
     }
 
     /**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b8b44bad5fb3df98cb42123076e99a4",
+    "content-hash": "7c73a86e75b0cf0ccfb5bfd5ad5fc318",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -454,6 +454,57 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
+        },
+        {
+            "name": "chaseconey/nova-external-image",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chaseconey/nova-external-image.git",
+                "reference": "f0d1fda7519da0678ea45d35bbbea3f52316957c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chaseconey/nova-external-image/zipball/f0d1fda7519da0678ea45d35bbbea3f52316957c",
+                "reference": "f0d1fda7519da0678ea45d35bbbea3f52316957c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chaseconey\\ExternalImage\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chaseconey\\ExternalImage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/chaseconey/nova-external-image/issues",
+                "source": "https://github.com/chaseconey/nova-external-image/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/chaseconey",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-12-14T21:16:13+00:00"
         },
         {
             "name": "composer/semver",

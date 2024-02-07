@@ -6,15 +6,15 @@ use App\Enums\StatusEnum;
 use App\Imports\ChannelImport;
 use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Notifications\NovaNotification;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ImportChannelExcelAction extends Action implements ShouldQueue
+class ImportChannelExcelAction extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -39,7 +39,11 @@ class ImportChannelExcelAction extends Action implements ShouldQueue
             }
         }
 
-        return $models;
+        auth('admins')->user()->notify(
+            NovaNotification::make()
+                ->message('Channels uploaded #'.$models->first()->id)
+                ->type('info')
+        );
     }
 
     /**

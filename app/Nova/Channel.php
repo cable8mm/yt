@@ -3,20 +3,24 @@
 namespace App\Nova;
 
 use App\Enums\StatusEnum;
+use App\Nova\Actions\ActiveSwitchAction;
 use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
 use App\Nova\Metrics\ImportExcels;
 use App\Traits\NovaGeneralAuthorized;
+use Chaseconey\ExternalImage\ExternalImage;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Notifications\NovaNotification;
 
 class Channel extends Resource
 {
@@ -58,12 +62,14 @@ class Channel extends Resource
 
             URL::make('Featured Video Url')
                 ->rules('required', 'max:191')
-                ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914'),
+                ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914')
+                ->hideFromIndex(),
 
             Text::make('Channelid')
                 ->rules('max:190')
                 ->help('Auto filled after running the action.')
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->hideFromIndex(),
 
             URL::make('Url')
                 ->rules('max:191')
@@ -74,14 +80,17 @@ class Channel extends Resource
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
-            Textarea::make('Description')
+            ExternalImage::make('Thumbnail Url')
+                ->rules('max:191')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
-            URL::make('Thumbnail Url')
-                ->rules('max:191')
+            Number::make('Videos Count', function () {
+                return $this->videos_count ?? 0;
+            })->exceptOnForms(),
+
+            Textarea::make('Description')
                 ->help('Auto filled after running the action.')
-                ->hideFromIndex()
                 ->hideWhenCreating(),
 
             URL::make('Medium Thumbnail Url')
@@ -155,8 +164,38 @@ class Channel extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            FilledYoutubeChannel::make(),
-            AddYoutubeChannelVideos::make(),
+            (new FilledYoutubeChannel)->then(function ($models) use ($request) {
+                $models->each(function ($model) use ($request) {
+                    $request->user()->notify(
+                        NovaNotification::make()
+                            ->message($model->name.' channel'.' filled.')
+                            ->type('info')
+                    );
+                });
+            }),
+            (new AddYoutubeChannelVideos)->then(function ($models) use ($request) {
+                $models->each(function ($model) use ($request) {
+                    $request->user()->notify(
+                        NovaNotification::make()
+                            ->message($model->name.' channel videos'.' filled.')
+                            ->type('info')
+                    );
+                });
+            }),
+            (new ActiveSwitchAction)->showInline(),
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        // Give relationship name as alias else Laravel will name it as comments_count
+        return $query->withCount('videos');
+    }
+
+    public static function detailQuery(NovaRequest $request, $query)
+    {
+        $query->withCount('videos');
+
+        return parent::detailQuery($request, $query);
     }
 }

@@ -29,7 +29,7 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
             $model->status(StatusEnum::running());
 
             try {
-                $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($model->channelid, now())->fetch()->get();
+                $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($model->channelid, now())->fetchOnce()->get();
             } catch (Exception $e) {
                 $model->status(StatusEnum::failed());
 
@@ -63,6 +63,8 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
             $model->status(StatusEnum::finished());
             $this->markAsFinished($model);
         }
+
+        return $models;
     }
 
     /**
