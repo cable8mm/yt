@@ -44,6 +44,8 @@ class Video extends Resource
     public static $search = [
         'id',
         'title',
+        'videoid',
+        'channel.name',
     ];
 
     /**
@@ -56,7 +58,7 @@ class Video extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Channel'),
+            BelongsTo::make('Channel')->filterable(),
 
             Text::make('Videoid'),
 

@@ -38,7 +38,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email', 'timezone',
+        'id',
+        'name',
+        'email',
     ];
 
     /**
@@ -68,7 +70,7 @@ class User extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
-            Timezone::make('Timezone')->rules('required')->default(TimezoneEnum::kDefault()),
+            Timezone::make('Timezone')->rules('required')->default(TimezoneEnum::kDefault())->filterable(),
 
             DateTime::make('Created At')->exceptOnForms(),
 

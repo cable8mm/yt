@@ -56,6 +56,7 @@ class ImportFile extends Resource
             Select::make('Type')->options(ImportFileEnum::kvCases())
                 ->rules('required')
                 ->default(ImportFileEnum::kDefault())
+                ->filterable()
                 ->displayUsingLabels()
                 ->help('Select upload file type between '.implode('and ', ImportFileEnum::vCases())),
 
