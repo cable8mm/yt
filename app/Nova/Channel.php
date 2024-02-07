@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Enums\StatusEnum;
+use App\Nova\Actions\ActiveSwitchAction;
 use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
 use App\Nova\Metrics\ImportExcels;
@@ -181,6 +182,7 @@ class Channel extends Resource
                     );
                 });
             }),
+            (new ActiveSwitchAction)->showInline(),
         ];
     }
 
