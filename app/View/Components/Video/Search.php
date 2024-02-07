@@ -13,7 +13,7 @@ class Search extends Component
 {
     private Collection $partners;
 
-    private ?string $q;
+    private ?string $query;
 
     private ?string $channelId;
 
@@ -22,11 +22,11 @@ class Search extends Component
      */
     public function __construct(Request $request)
     {
-        $this->q = $request->get('q');
+        $this->query = $request->get('query');
 
         $this->channelId = $request->get('channel_id');
 
-        $this->partners = Channel::active()->ordered()->get();
+        $this->partners = Channel::withCount('videos')->hasVideo()->active()->ordered()->get();
     }
 
     /**
@@ -36,7 +36,7 @@ class Search extends Component
     {
         return view('components.video.search', [
             'partners' => $this->partners,
-            'q' => $this->q,
+            'query' => $this->query,
             'channel_id' => $this->channelId,
         ]);
     }
