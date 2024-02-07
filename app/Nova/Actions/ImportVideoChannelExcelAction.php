@@ -6,6 +6,7 @@ use App\Enums\StatusEnum;
 use App\Imports\VideoChannelImport;
 use Exception;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
@@ -13,7 +14,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ImportVideoChannelExcelAction extends Action
+class ImportVideoChannelExcelAction extends Action implements ShouldQueue
 {
     use InteractsWithQueue, Queueable;
 
