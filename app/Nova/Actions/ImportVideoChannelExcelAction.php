@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Notifications\NovaNotification;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportVideoChannelExcelAction extends Action implements ShouldQueue
@@ -39,7 +40,11 @@ class ImportVideoChannelExcelAction extends Action implements ShouldQueue
             }
         }
 
-        return $models;
+        auth('admins')->user()->notify(
+            NovaNotification::make()
+                ->message('Channel videos uploaded #'.$models->first()->id)
+                ->type('info')
+        );
     }
 
     /**

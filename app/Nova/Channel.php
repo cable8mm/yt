@@ -17,6 +17,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Notifications\NovaNotification;
 
 class Channel extends Resource
 {
@@ -155,8 +156,24 @@ class Channel extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            FilledYoutubeChannel::make(),
-            AddYoutubeChannelVideos::make(),
+            (new FilledYoutubeChannel)->then(function ($models) use ($request) {
+                $models->each(function ($model) use ($request) {
+                    $request->user()->notify(
+                        NovaNotification::make()
+                            ->message($model->name.' channel'.' filled.')
+                            ->type('info')
+                    );
+                });
+            }),
+            (new AddYoutubeChannelVideos)->then(function ($models) use ($request) {
+                $models->each(function ($model) use ($request) {
+                    $request->user()->notify(
+                        NovaNotification::make()
+                            ->message($model->name.' channel videos'.' filled.')
+                            ->type('info')
+                    );
+                });
+            }),
         ];
     }
 }

@@ -27,6 +27,8 @@ class FilledYoutubeChannelid extends Action implements ShouldQueue
             $model->channelid = $video->channel_id;
             $model->save();
         }
+
+        return $models;
     }
 
     /**
