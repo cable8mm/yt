@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2024.02.0717 - 2024-02-07
+
+### What's Changed
+
+* Fix the bug not to import from channels excel. by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/34
+* Set all action as queued, please run `php artisan queue:restart` by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/35
+* Customize views by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/36
+* Support to import excels yes template excels by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/37
+
+**Full Changelog**: https://github.com/cable8mm/yt/compare/2024.02.2701...2024.02.0717
+
 ## 2024.02.2701 - 2024-02-06
 
 ### What's Changed
