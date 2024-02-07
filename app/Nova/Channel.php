@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Status;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -59,12 +60,14 @@ class Channel extends Resource
 
             URL::make('Featured Video Url')
                 ->rules('required', 'max:191')
-                ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914'),
+                ->help('eg. https://www.youtube.com/watch?v=djV11Xbc914')
+                ->hideFromIndex(),
 
             Text::make('Channelid')
                 ->rules('max:190')
                 ->help('Auto filled after running the action.')
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->hideFromIndex(),
 
             URL::make('Url')
                 ->rules('max:191')
@@ -74,6 +77,10 @@ class Channel extends Resource
             Text::make('Name')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
+
+            Number::make('Videos Count', function () {
+                return $this->videos_count ?? 0;
+            })->exceptOnForms(),
 
             Textarea::make('Description')
                 ->help('Auto filled after running the action.')
@@ -175,5 +182,18 @@ class Channel extends Resource
                 });
             }),
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        // Give relationship name as alias else Laravel will name it as comments_count
+        return $query->withCount('videos');
+    }
+
+    public static function detailQuery(NovaRequest $request, $query)
+    {
+        $query->withCount('videos');
+
+        return parent::detailQuery($request, $query);
     }
 }
