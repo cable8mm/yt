@@ -16,6 +16,7 @@ I believe that this is fantastic. Enjoy!
 
 ## Preview
 
+![Frontend Screenshot](docs/assets/yt_front_screenshot_1.png)
 ![Backend Screenshot](docs/assets/yt_backend_screenshot_1.png)
 
 ## Installation
