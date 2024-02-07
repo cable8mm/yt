@@ -1,13 +1,13 @@
 <x-app-layout>
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
             <div class="relative h-12 overflow-hidden rounded md:h-48">
                 <div class="duration-700 ease-in-out">
                     <div class="flex justify-center items-center w-full h-full">
                         <div class="z-20 px-4 mx-auto text-center">
                             <div class="text-center py-8">
                                 <img src="{{ $channel->thumbnail_url }}" class="mx-auto block rounded-lg">
+                                <x-youtube-subscriber-count :channelid="$channel->channelid" />
                                 <h1 class="text-white pt-2">{{ $channel->name }}</h1>
                             </div>
                         </div>
@@ -18,7 +18,6 @@
                     </div>
                 </div>
             </div>
-
             <div>
                 <x-x.widget-title href="{{ route('video') }}">{{ __('Recently Videos') }}</x-x.widget-title>
                 <div class="grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-4">
