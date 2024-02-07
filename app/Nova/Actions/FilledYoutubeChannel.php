@@ -5,13 +5,14 @@ namespace App\Nova\Actions;
 use App\Support\YoutubeChannel;
 use App\Support\YoutubeVideo;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class FilledYoutubeChannel extends Action
+class FilledYoutubeChannel extends Action implements ShouldQueue
 {
     use InteractsWithQueue, Queueable;
 
