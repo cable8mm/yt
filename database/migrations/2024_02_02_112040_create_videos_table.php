@@ -27,12 +27,8 @@ return new class extends Migration
             $table->string('duration')->nullable();
             $table->string('license')->nullable();
             $table->boolean('has_caption')->default(false);
-            $table->boolean('is_live_broadcasting')->default(false);
-            $table->dateTime('scheduled_start_time')->nullable();
-            $table->dateTime('scheduled_end_time')->nullable();
             $table->timestamp('published_at');
             $table->boolean('is_active')->default(true);
-            $table->boolean('is_podcast_active')->default(false);
             $table->timestamps();
         });
     }
