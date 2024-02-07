@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Enums\StatusEnum;
 use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
+use App\Nova\Metrics\ImportExcels;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
@@ -121,7 +122,9 @@ class Channel extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            ImportExcels::make(),
+        ];
     }
 
     /**
