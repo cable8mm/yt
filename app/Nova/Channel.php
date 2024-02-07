@@ -107,7 +107,10 @@ class Channel extends Resource
 
             Status::make('Status')
                 ->loadingWhen(StatusEnum::loadingWhen())
-                ->failedWhen(StatusEnum::failedWhen()),
+                ->failedWhen(StatusEnum::failedWhen())
+                ->filterable(function ($request, $query, $value, $attribute) {
+                    $query->where($attribute, "{$value}%");
+                }),
 
             DateTime::make('Youtube Published After At')
                 ->help('Auto filled after running the action.')

@@ -37,7 +37,9 @@ class Admin extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email', 'timezone',
+        'id',
+        'name',
+        'email',
     ];
 
     /**
