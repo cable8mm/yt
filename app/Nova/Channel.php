@@ -7,6 +7,7 @@ use App\Nova\Actions\AddYoutubeChannelVideos;
 use App\Nova\Actions\FilledYoutubeChannel;
 use App\Nova\Metrics\ImportExcels;
 use App\Traits\NovaGeneralAuthorized;
+use Chaseconey\ExternalImage\ExternalImage;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
@@ -78,18 +79,17 @@ class Channel extends Resource
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
 
+            ExternalImage::make('Thumbnail Url')
+                ->rules('max:191')
+                ->help('Auto filled after running the action.')
+                ->hideWhenCreating(),
+
             Number::make('Videos Count', function () {
                 return $this->videos_count ?? 0;
             })->exceptOnForms(),
 
             Textarea::make('Description')
                 ->help('Auto filled after running the action.')
-                ->hideWhenCreating(),
-
-            URL::make('Thumbnail Url')
-                ->rules('max:191')
-                ->help('Auto filled after running the action.')
-                ->hideFromIndex()
                 ->hideWhenCreating(),
 
             URL::make('Medium Thumbnail Url')

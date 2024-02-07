@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ActiveSwitchAction;
 use App\Traits\NovaGeneralAuthorized;
 use App\Traits\NovaOutOfControlAuthorized;
+use Chaseconey\ExternalImage\ExternalImage;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -63,9 +65,8 @@ class Video extends Resource
 
             Trix::make('Description')->alwaysShow(),
 
-            URL::make('Thumbnail Url')
-                ->rules('max:191')
-                ->hideFromIndex(),
+            ExternalImage::make('Thumbnail Url')
+                ->rules('max:191'),
 
             URL::make('Medium Thumbnail Url')
                 ->rules('max:191')
@@ -82,25 +83,17 @@ class Video extends Resource
 
             Text::make('Duration'),
 
-            Text::make('License'),
+            Text::make('License')
+                ->hideFromIndex(),
 
-            Boolean::make('Has Caption'),
-
-            Boolean::make('Is Live Broadcasting'),
-
-            DateTime::make('Scheduled Start Time'),
-
-            DateTime::make('Scheduled End Time'),
+            Boolean::make('Has Caption')
+                ->hideFromIndex(),
 
             DateTime::make('Published At')
                 ->rules('nullable')
                 ->filterable(),
 
             Boolean::make('Is Active')
-                ->filterable()
-                ->default(false),
-
-            Boolean::make('Is Podcast Active')
                 ->filterable()
                 ->default(false),
         ];
@@ -143,6 +136,8 @@ class Video extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new ActiveSwitchAction)->showInline(),
+        ];
     }
 }

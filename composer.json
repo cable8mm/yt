@@ -11,6 +11,7 @@
         "php": "^8.2",
         "blade-ui-kit/blade-heroicons": "^2.2",
         "cable8mm/youtube": "^3.0",
+        "chaseconey/nova-external-image": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-lang/locales": "^2.5",
         "laravel/framework": "^10.0",
