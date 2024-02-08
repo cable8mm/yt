@@ -6,6 +6,7 @@ use App\Jobs\FutureCrawlYoutubeVideos;
 use App\Jobs\PastCrawlYoutubeVideos;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\App;
 
 class Kernel extends ConsoleKernel
 {
@@ -17,6 +18,10 @@ class Kernel extends ConsoleKernel
         $schedule->job(new PastCrawlYoutubeVideos)->everyMinute();
 
         $schedule->job(new FutureCrawlYoutubeVideos)->everyMinute();
+
+        if (App::environment('local')) {
+            $schedule->command('telescope:prune')->daily();
+        }
     }
 
     /**
