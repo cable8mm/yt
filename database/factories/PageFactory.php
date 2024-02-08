@@ -21,7 +21,7 @@ class PageFactory extends Factory
 
         return [
             'locale' => $locale,
-            'title' => fake(LocaleEnum::real($locale))->realText(100),
+            'title' => fake(LocaleEnum::real($locale))->realText(10),
             'slug' => fake()->slug(),
             'content' => fake(LocaleEnum::real($locale))->realText(5000),
             'cansee_in_menu' => true,
