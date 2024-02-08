@@ -50,6 +50,13 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="timezone" :value="__('Timezone')" />
+            <x-x.timezone-select-form id="timezone" name="timezone" type="text" class="mt-1 block w-full"
+                :value="old('timezone', $user->timezone)" required autofocus autocomplete="timezone" />
+            <x-input-error class="mt-2" :messages="$errors->get('timezone')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
