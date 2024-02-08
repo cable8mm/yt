@@ -3,6 +3,7 @@
 namespace App\View\Components\Layout;
 
 use App\Models\Channel;
+use App\Models\Page;
 use App\Models\Video;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,6 +16,8 @@ class Footer extends Component
 
     private int $videoCount;
 
+    private Collection $pages;
+
     /**
      * Create a new component instance.
      */
@@ -23,6 +26,8 @@ class Footer extends Component
         $this->partners = Channel::active()->ordered()->get();
 
         $this->videoCount = Video::count();
+
+        $this->pages = Page::active()->localed()->ordered()->get();
     }
 
     /**
@@ -33,6 +38,7 @@ class Footer extends Component
         return view('components.layout.footer', [
             'partners' => $this->partners,
             'videoCount' => $this->videoCount,
+            'pages' => $this->pages,
         ]);
     }
 }

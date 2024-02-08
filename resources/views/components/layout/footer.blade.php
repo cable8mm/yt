@@ -19,6 +19,17 @@
                     </ul>
                 </div>
                 <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('Pages') }}</h2>
+                    <ul class="text-gray-500 font-medium">
+                        @foreach ($pages as $item)
+                            <li class="mb-4">
+                                <a href="{{ route('page.show', $item->slug) }}"
+                                    class="hover:underline">{{ $item->title }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div>
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('Development') }}</h2>
                     <ul class="text-gray-500 font-medium">
                         <li class="mb-4">
@@ -29,17 +40,6 @@
                         </li>
                     </ul>
                 </div>
-                {{-- <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('Legal') }}</h2>
-                  <ul class="text-gray-500 font-medium">
-                      <li class="mb-4">
-                          <a href="{{ route('pages', 'privacy-policy') }}" class="hover:underline">{{ __('Privacy Policy') }}</a>
-                      </li>
-                      <li>
-                          <a href="{{ route('pages', 'terms-conditions') }}" class="hover:underline">{{ __('Terms & Conditions') }}</a>
-                      </li>
-                  </ul>
-              </div> --}}
             </div>
         </div>
         <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
