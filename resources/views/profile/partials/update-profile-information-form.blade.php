@@ -51,6 +51,13 @@
         </div>
 
         <div>
+            <x-input-label for="locale" :value="__('Locale')" />
+            <x-x.locale-select-form id="locale" name="locale" type="text" class="mt-1 block w-full"
+                :value="old('locale', $user->locale)" autofocus autocomplete="locale" />
+            <x-input-error class="mt-2" :messages="$errors->get('locale')" />
+        </div>
+
+        <div>
             <x-input-label for="timezone" :value="__('Timezone')" />
             <x-x.timezone-select-form id="timezone" name="timezone" type="text" class="mt-1 block w-full"
                 :value="old('timezone', $user->timezone)" required autofocus autocomplete="timezone" />

@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use App\Enums\TimezoneEnum;
+use App\Enums\LocaleEnum;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Timezone;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -70,7 +71,12 @@ class User extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
-            Timezone::make('Timezone')->rules('required')->default(TimezoneEnum::kDefault())->filterable(),
+            Select::make('Locale')
+                ->nullable()
+                ->displayUsingLabels()
+                ->options(LocaleEnum::kvCases()),
+
+            Timezone::make('Timezone')->rules('required')->searchable(),
 
             DateTime::make('Created At')->exceptOnForms(),
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('email')->nullable()->change();
+            $table->string('locale', 2)->nullable()->after('password');
             $table->string('timezone', 50)->nullable()->after('password');
         });
     }
@@ -24,6 +25,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('email')->require()->change();
+            $table->dropColumn('locale');
             $table->dropColumn('timezone');
         });
     }

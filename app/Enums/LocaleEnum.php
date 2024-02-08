@@ -9,7 +9,7 @@ enum LocaleEnum: string
     use EnumCasesTrait;
 
     case en = 'English';
-    case ko = 'Korean';
+    case ko = '한글';
 
     public static function real(string $locale): string
     {
