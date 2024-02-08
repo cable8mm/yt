@@ -2,40 +2,37 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ActiveSwitchAction;
+use App\Enums\LocaleEnum;
+use App\Enums\MindRuleEnum;
 use App\Traits\NovaGeneralAuthorized;
-use App\Traits\NovaOutOfControlAuthorized;
-use Chaseconey\ExternalImage\ExternalImage;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Trix;
-use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Video extends Resource
+class Mind extends Resource
 {
     use NovaGeneralAuthorized;
-    use NovaOutOfControlAuthorized;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Video>
+     * @var class-string<\App\Models\Mind>
      */
-    public static $model = \App\Models\Video::class;
+    public static $model = \App\Models\Mind::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -44,9 +41,6 @@ class Video extends Resource
      */
     public static $search = [
         'id',
-        'title',
-        'videoid',
-        'channel.name',
     ];
 
     /**
@@ -59,48 +53,36 @@ class Video extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Channel')->filterable(),
-
-            Text::make('Videoid'),
+            Select::make('Locale')
+                ->options(LocaleEnum::kvCases())
+                ->rules('required')
+                ->default(LocaleEnum::kDefault()),
 
             Text::make('Title')
-                ->rules('max:191'),
+                ->rules('required', 'max:191'),
 
-            Trix::make('Description')->alwaysShow(),
+            Number::make('Videos Count', function () {
+                return $this->videos_count ?? 0;
+            })->exceptOnForms(),
 
-            ExternalImage::make('Thumbnail Url')
-                ->rules('max:191'),
+            Markdown::make('Content'),
 
-            URL::make('Medium Thumbnail Url')
-                ->rules('max:191')
-                ->hideFromIndex(),
+            Select::make('Matching Rule')
+                ->options(MindRuleEnum::kvCases())
+                ->rules('required')
+                ->default(MindRuleEnum::kDefault()),
 
-            URL::make('Featured Image Url')
-                ->rules('max:191')
-                ->hideFromIndex(),
+            DateTime::make('Opened At'),
 
-            Textarea::make('Embed Html'),
-
-            Text::make('Tag')
-                ->hideFromIndex(),
-
-            Text::make('Duration'),
-
-            Text::make('License')
-                ->hideFromIndex(),
-
-            Boolean::make('Has Caption')
-                ->hideFromIndex(),
-
-            DateTime::make('Published At')
-                ->rules('nullable')
-                ->filterable(),
+            DateTime::make('Closed At'),
 
             Boolean::make('Is Active')
+                ->rules('required')
                 ->filterable()
-                ->default(false),
+                ->default(true),
 
-            BelongsToMany::make('Minds'),
+            BelongsToMany::make('Videos')
+                ->searchable(),
         ];
     }
 
@@ -141,8 +123,13 @@ class Video extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [
-            (new ActiveSwitchAction)->showInline(),
-        ];
+        return [];
+    }
+
+    public static function detailQuery(NovaRequest $request, $query)
+    {
+        $query->withCount('videos');
+
+        return parent::detailQuery($request, $query);
     }
 }
