@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ChannelSeeder::class,
             PageSeeder::class,
+            MindSeeder::class,
         ]);
     }
 }
