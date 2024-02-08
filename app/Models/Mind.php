@@ -11,7 +11,8 @@ class Mind extends Model
     use HasFactory;
 
     protected $casts = [
-        'displayed_at' => 'datetime',
+        'opened_at' => 'datetime',
+        'closed_at' => 'datetime',
         'is_active' => 'boolean',
     ];
 
