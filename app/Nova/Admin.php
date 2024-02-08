@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use App\Enums\TimezoneEnum;
 use App\Traits\NovaGeneralAuthorized;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -69,7 +68,7 @@ class Admin extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
-            Timezone::make('Timezone')->rules('required')->default(TimezoneEnum::kDefault()),
+            Timezone::make('Timezone')->rules('required')->searchable(),
         ];
     }
 
