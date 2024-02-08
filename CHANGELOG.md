@@ -1,5 +1,22 @@
 # Release Notes
 
+## 2024.02.0818 - 2024-02-08
+
+### What's Changed
+
+* Customize backoffice by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/38
+* Apply filterable by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/39
+* Integrate scout for search by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/40
+* Add static pages by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/41
+* Add new feature named mind by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/42
+* Add new feature join in and sign in by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/43
+* Add language filed in user table by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/44
+* Remove sentry key for local by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/45
+* Install laravel/telescope and integrate it by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/46
+* Stop running wrong schedules by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/47
+
+**Full Changelog**: https://github.com/cable8mm/yt/compare/2024.02.0717...2024.02.0818
+
 ## 2024.02.0717 - 2024-02-07
 
 ### What's Changed
