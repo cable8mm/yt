@@ -57,6 +57,7 @@ class Page extends Resource
                 ->options(LocaleEnum::kvCases())
                 ->rules('required')
                 ->default(LocaleEnum::kDefault())
+                ->displayUsingLabels()
                 ->filterable(),
 
             Text::make('Title')

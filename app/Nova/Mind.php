@@ -56,6 +56,7 @@ class Mind extends Resource
             Select::make('Locale')
                 ->options(LocaleEnum::kvCases())
                 ->rules('required')
+                ->displayUsingLabels()
                 ->default(LocaleEnum::kDefault()),
 
             Text::make('Title')
@@ -70,6 +71,7 @@ class Mind extends Resource
             Select::make('Matching Rule')
                 ->options(MindRuleEnum::kvCases())
                 ->rules('required')
+                ->displayUsingLabels()
                 ->default(MindRuleEnum::kDefault()),
 
             DateTime::make('Opened At'),
