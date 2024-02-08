@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -59,6 +60,10 @@ class Mind extends Resource
 
             Text::make('Title')
                 ->rules('required', 'max:191'),
+
+            Number::make('Videos Count', function () {
+                return $this->videos_count ?? 0;
+            })->exceptOnForms(),
 
             Markdown::make('Content'),
 
@@ -119,5 +124,12 @@ class Mind extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function detailQuery(NovaRequest $request, $query)
+    {
+        $query->withCount('videos');
+
+        return parent::detailQuery($request, $query);
     }
 }
