@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             ChannelSeeder::class,
+            PageSeeder::class,
         ]);
     }
 }

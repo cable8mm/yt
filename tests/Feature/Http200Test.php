@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Enums\LocaleEnum;
 use App\Models\Channel;
+use App\Models\Page;
 use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mcamara\LaravelLocalization\LaravelLocalization;
@@ -54,12 +56,28 @@ class Http200Test extends TestCase
         $video = Video::factory()->for(Channel::factory()->create())->create();
 
         $this->get(route('video.show', $video->id))->assertStatus(200);
+    }
 
-        // $this->refreshApplicationWithLocale('en');
-        // $this->get(route('video.show', $video->id))->assertStatus(200);
+    public function test_video_show_should_response_200_en(): void
+    {
+        $this->refreshApplicationWithLocale('en');
 
-        // $this->refreshApplicationWithLocale('ko');
-        // $this->get(route('video.show', $video->id))->assertStatus(200);
+        $channel = Channel::factory()->create();
+
+        $video = Video::factory()->for(Channel::factory()->create())->create();
+
+        $this->get(route('video.show', $video->id))->assertStatus(200);
+    }
+
+    public function test_video_show_should_response_200_ko(): void
+    {
+        $this->refreshApplicationWithLocale('ko');
+
+        $channel = Channel::factory()->create();
+
+        $video = Video::factory()->for(Channel::factory()->create())->create();
+
+        $this->get(route('video.show', $video->id))->assertStatus(200);
     }
 
     public function test_channel_should_response_200(): void
@@ -78,11 +96,52 @@ class Http200Test extends TestCase
         $channel = Channel::factory()->create();
 
         $this->get(route('channel.show', $channel->id))->assertStatus(200);
+    }
 
-        // $this->refreshApplicationWithLocale('en');
-        // $this->get('/en/channels/'.$channel->id)->assertStatus(200);
+    public function test_channel_show_should_response_200_en(): void
+    {
+        $this->refreshApplicationWithLocale('en');
 
-        // $this->refreshApplicationWithLocale('ko');
-        // $this->get('/ko/channels/'.$channel->id)->assertStatus(200);
+        $channel = Channel::factory()->create();
+
+        $this->get(route('channel.show', $channel->id))->assertStatus(200);
+    }
+
+    public function test_channel_show_should_response_200_ko(): void
+    {
+        $this->refreshApplicationWithLocale('ko');
+
+        $channel = Channel::factory()->create();
+
+        $this->get(route('channel.show', $channel->id))->assertStatus(200);
+    }
+
+    public function test_page_show_should_response_200(): void
+    {
+        $page = Page::factory()->create();
+
+        $this->get(route('page.show', $page->slug))->assertStatus(200);
+    }
+
+    public function test_page_show_should_response_200_en(): void
+    {
+        $this->refreshApplicationWithLocale('en');
+
+        $page = Page::factory()->state([
+            'locale' => LocaleEnum::en->name,
+        ])->create();
+
+        $this->get(route('page.show', $page->slug))->assertStatus(200);
+    }
+
+    public function test_page_show_should_response_200_kr(): void
+    {
+        $this->refreshApplicationWithLocale('ko');
+
+        $page = Page::factory()->state([
+            'locale' => LocaleEnum::ko->name,
+        ])->create();
+
+        $this->get(route('page.show', $page->slug))->assertStatus(200);
     }
 }
