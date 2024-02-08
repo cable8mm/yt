@@ -15,9 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->job(new PastCrawlYoutubeVideos)->everyMinute();
+        // $schedule->job(new PastCrawlYoutubeVideos)->everyMinute();
 
-        $schedule->job(new FutureCrawlYoutubeVideos)->everyMinute();
+        // $schedule->job(new FutureCrawlYoutubeVideos)->everyMinute();
 
         if (App::environment('local')) {
             $schedule->command('telescope:prune')->daily();
