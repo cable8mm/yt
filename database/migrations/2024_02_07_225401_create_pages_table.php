@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('locale', 2)->defualt(LocaleEnum::kDefault());
             $table->string('title', 190)->comment('page\'s title');
-            $table->string('slug', 50);
+            $table->string('slug', 100);
             $table->text('content');
             $table->boolean('cansee_in_menu')->default(true)->comment('If true, it can be seen in navigation and footer.');
             $table->boolean('is_active')->default(true);

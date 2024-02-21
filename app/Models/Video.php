@@ -43,11 +43,6 @@ class Video extends Model
         $query->orderBy('published_at', 'desc');
     }
 
-    public function scopeByLiveBroadcasting(Builder $query, $active = true): void
-    {
-        $query->where('is_live_broadcasting', $active);
-    }
-
     /* SCOUT require methods */
 
     /**

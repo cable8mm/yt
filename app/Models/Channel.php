@@ -49,7 +49,7 @@ class Channel extends Model
      */
     public function scopeHasVideo(Builder $query): void
     {
-        $query->where('videos_count', '>', 0);
+        $query->having('videos_count', '>', 0);
     }
 
     /**
@@ -57,7 +57,7 @@ class Channel extends Model
      */
     public function scopeHasntVideo(Builder $query): void
     {
-        $query->where('videos_count', 0);
+        $query->having('videos_count', 0);
     }
 
     public function status(string $status): bool
