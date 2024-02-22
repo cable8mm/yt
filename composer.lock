@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "caab8a92956633f78223c828e76de13b",
+    "content-hash": "40269fc4a40bf80120a36db54c2fbe70",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -317,16 +317,16 @@
         },
         {
             "name": "cable8mm/youtube",
-            "version": "v3.2.1",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cable8mm/Youtube.git",
-                "reference": "094dd7d3e3c240751618292e4a5e325dd211b8f9"
+                "reference": "a2cddbc00267886c83ddcc3954fff8e171671151"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cable8mm/Youtube/zipball/094dd7d3e3c240751618292e4a5e325dd211b8f9",
-                "reference": "094dd7d3e3c240751618292e4a5e325dd211b8f9",
+                "url": "https://api.github.com/repos/cable8mm/Youtube/zipball/a2cddbc00267886c83ddcc3954fff8e171671151",
+                "reference": "a2cddbc00267886c83ddcc3954fff8e171671151",
                 "shasum": ""
             },
             "require": {
@@ -382,9 +382,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cable8mm/Youtube/issues",
-                "source": "https://github.com/cable8mm/Youtube/tree/v3.2.1"
+                "source": "https://github.com/cable8mm/Youtube/tree/v4.1.0"
             },
-            "time": "2024-02-08T08:19:09+00:00"
+            "time": "2024-02-22T10:08:32+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -9933,16 +9933,16 @@
         },
         {
             "name": "laravel-lang/lang",
-            "version": "14.3.3",
+            "version": "14.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/lang.git",
-                "reference": "ddb4f5e022b3e6cca7e6b33545e054df31149a33"
+                "reference": "59ccecf2876b04bcc61c4b09843410733aaa13ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/ddb4f5e022b3e6cca7e6b33545e054df31149a33",
-                "reference": "ddb4f5e022b3e6cca7e6b33545e054df31149a33",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/59ccecf2876b04bcc61c4b09843410733aaa13ff",
+                "reference": "59ccecf2876b04bcc61c4b09843410733aaa13ff",
                 "shasum": ""
             },
             "require": {
@@ -9989,7 +9989,7 @@
                 "issues": "https://github.com/Laravel-Lang/lang/issues",
                 "source": "https://github.com/Laravel-Lang/lang"
             },
-            "time": "2024-02-21T16:35:40+00:00"
+            "time": "2024-02-22T06:26:59+00:00"
         },
         {
             "name": "laravel-lang/publisher",

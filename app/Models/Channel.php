@@ -20,7 +20,7 @@ class Channel extends Model
     protected $casts = [
         'youtube_published_after_at' => 'datetime',
         'youtube_published_before_at' => 'datetime',
-        'is_auto_active' => 'boolean',
+        'is_past_crawling_done' => 'boolean',
         'is_active' => 'boolean',
     ];
 
@@ -55,6 +55,13 @@ class Channel extends Model
     {
         $this->update([
             'youtube_published_before_at' => null,
+        ]);
+    }
+
+    public function setPublishedBeforeAt(Carbon $before): bool
+    {
+        return $this->update([
+            'youtube_published_before_at' => $before,
         ]);
     }
 

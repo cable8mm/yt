@@ -24,20 +24,22 @@ class YoutubeVideoCollection implements Countable, Iterator
     public array $container = [];
 
     /**
+     * Pageinfo after fetched
+     *
+     * [kind] => youtube#searchListResponse
+     * [etag] => 3Mu3sIIb1G68FXBk98Lgn_g2mwY
+     * [prevPageToken] =>
+     * [nextPageToken] => CAEQAA
+     * [resultsPerPage] => 1
+     * [totalResults] => 448
+     */
+    public array $info = [];
+
+    /**
      * Set video count while youtube api has been called.
      * Why it has existed is for testing infinite calls.
      */
     private int $youtubeFetchCount = 50;
-
-    /**
-     * Set max count to prevent infinite call to youtube api.
-     */
-    private int $maxFetchCount = 10;
-
-    /**
-     * Current fetch count. If $maxFetchCount <= $currentFetchCount then calling stop() must be call.
-     */
-    private int $currentFetchCount = 0;
 
     public string $channelId;
 
@@ -51,14 +53,9 @@ class YoutubeVideoCollection implements Countable, Iterator
      */
     private ?Carbon $to;
 
-    /**
-     * It depend on whether youtube api is called or not.
-     * This property can only control by stop(), and view by isStop().
-     * You never view and control directly.
-     */
-    private bool $keepgoing = true;
+    private ?string $prevPageToken;
 
-    public function __construct(string $channelId, ?Carbon $from = null, ?Carbon $to = null)
+    public function __construct(string $channelId, ?Carbon $from = null, ?Carbon $to = null, ?string $prevPageToken = null)
     {
         if ($from == null && $to == null) {
             throw new InvalidArgumentException();
@@ -68,77 +65,33 @@ class YoutubeVideoCollection implements Countable, Iterator
         $this->from = $from;
         $this->to = $to;
         $this->position = 0;
-    }
-
-    public function fetch(): static
-    {
-        while (true) {
-            $this->fetchOnce();
-
-            if ($this->isStop()) {
-                break;
-            }
-        }
-
-        return $this;
+        $this->prevPageToken = $prevPageToken;
     }
 
     /**
      * Fetch from youtube channel videos just one time.
      * Probably privait should be set, because why it is public is for testing.
      */
-    public function fetchOnce(): static
+    public function fetch(): static
     {
-        // guard
-        if ($this->isStop()) {
-            return $this;
-        }
-
         // fetch
         $videos = $this->from === null ?
-            Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->to->toRfc3339String(), true)
-            : Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->from->toRfc3339String());
+            Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->to->toRfc3339String(), true, $this->prevPageToken)
+            : Youtube::getChannelVideos($this->channelId, $this->youtubeFetchCount, $this->from->toRfc3339String(), false, $this->prevPageToken);
 
         // if last then stop
-        if (empty($videos)) {
-            $this->stop();
-
+        if (empty($videos['results'])) {
             return $this;
         }
 
         // merge all videos to container
-        foreach ($videos as $video) {
+        foreach ($videos['results'] as $video) {
             $this->container[] = YoutubeVideo::make($video);
         }
 
-        // set last time, because next time it must be used as start time for fetching
-        $this->from = Carbon::create(end($this->container)->published)->subSecond();
-
-        // increment fetch count
-        $this->incrementCurrentFetchCount();
+        $this->info = $videos['info'];
 
         return $this;
-    }
-
-    private function incrementCurrentFetchCount()
-    {
-        $this->currentFetchCount++;
-
-        if ($this->currentFetchCount >= $this->maxFetchCount) {
-            $this->stop();
-        }
-    }
-
-    public function stop(): static
-    {
-        $this->keepgoing = false;
-
-        return $this;
-    }
-
-    public function isStop()
-    {
-        return ! $this->keepgoing;
     }
 
     public function get(): array
@@ -146,9 +99,19 @@ class YoutubeVideoCollection implements Countable, Iterator
         return $this->container;
     }
 
-    public static function makeByFrom(string $channelId, Carbon $from): static
+    public function prevPageToken(): string
     {
-        return static::make($channelId, $from);
+        return $this->info['nextPageToken'];
+    }
+
+    public function last(): bool
+    {
+        return $this->count() !== $this->youtubeFetchCount;
+    }
+
+    public static function makeByFrom(string $channelId, Carbon $from, ?string $prevPageToken = null): static
+    {
+        return static::make($channelId, $from, null, $prevPageToken);
     }
 
     public static function makeByTo(string $channelId, Carbon $to): static
