@@ -63,13 +63,15 @@ class Video extends Resource
 
             Text::make('Videoid'),
 
+            ExternalImage::make('Thumbnail Url')
+                ->rules('max:191')
+                ->radius(4)
+                ->width(128),
+
             Text::make('Title')
                 ->rules('max:191'),
 
             Trix::make('Description')->alwaysShow(),
-
-            ExternalImage::make('Thumbnail Url')
-                ->rules('max:191'),
 
             URL::make('Medium Thumbnail Url')
                 ->rules('max:191')
