@@ -114,10 +114,6 @@ class Channel extends Resource
                     $query->where($attribute, "{$value}%");
                 }),
 
-            Text::make('Next Page Token')
-                ->help('Auto filled after running the action.')
-                ->exceptOnForms(),
-
             Text::make('Prev Page Token')
                 ->help('If it is set, it will be crawling all videos automatically in the past.')
                 ->exceptOnForms(),

@@ -29,7 +29,7 @@ class YoutubeVideoCollectionTest extends TestCase
         if (config('yt.do_youtube_key_test')) {
             $channelId = ChannelSeeder::$seedChannelId;
 
-            $actual = YoutubeVideoCollection::makeByFrom($channelId, now())->fetchOnce()->get();
+            $actual = YoutubeVideoCollection::makeByFrom($channelId, now())->fetch()->get();
 
             $this->assertNotEmpty($actual);
         } else {
@@ -53,7 +53,7 @@ class YoutubeVideoCollectionTest extends TestCase
         if (config('yt.do_youtube_key_test')) {
             $channelId = ChannelSeeder::$seedChannelId;
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($channelId, now())->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($channelId, now())->fetch()->get();
 
             $this->assertNotEmpty($youtubeVideoCollection);
         } else {

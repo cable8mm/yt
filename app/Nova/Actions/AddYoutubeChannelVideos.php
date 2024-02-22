@@ -27,56 +27,72 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
+            if ($model->is_past_crawling_done) {
+                continue;
+            }
+
             $model->status(StatusEnum::running());
 
             try {
-                $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($model->channelid, now())->fetchOnce()->get();
+                $collection = YoutubeVideoCollection::makeByFrom($model->channelid, $model->created_at, $model->prev_page_token)->fetch();
+
+                $youtubeVideoCollection = $collection->get();
             } catch (Exception $e) {
                 $model->status(StatusEnum::failed());
 
                 $this->markAsFailed($model, $e);
-            }
 
-            info($youtubeVideoCollection);
+                return $models;
+            }
 
             $creates = [];
 
-            foreach ($youtubeVideoCollection as $video) {
-                try {
-                    if ($model instanceof Channel) {
-                        $creates[] = [
-                            'channel_id' => $model->id,
-                            'videoid' => $video->id,
-                            'title' => $video->title,
-                            'description' => $video->description,
-                            'thumbnail_url' => $video->thumbnail_url,
-                            'medium_thumbnail_url' => $video->medium_thumbnail_url,
-                            'featured_image_url' => $video->featured_image_url,
-                            'embed_html' => $video->embed_html,
-                            'tag' => $video->tag,
-                            'duration' => $video->duration,
-                            'license' => $video->license,
-                            'published_at' => $video->published,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
+            if (! empty($youtubeVideoCollection)) {
+                foreach ($youtubeVideoCollection as $video) {
+                    try {
+                        if ($model instanceof Channel) {
+                            $creates[] = [
+                                'channel_id' => $model->id,
+                                'videoid' => $video->id,
+                                'title' => $video->title,
+                                'description' => $video->description,
+                                'thumbnail_url' => $video->thumbnail_url,
+                                'medium_thumbnail_url' => $video->medium_thumbnail_url,
+                                'featured_image_url' => $video->featured_image_url,
+                                'embed_html' => $video->embed_html,
+                                'tag' => $video->tag,
+                                'duration' => $video->duration,
+                                'license' => $video->license,
+                                'published_at' => $video->published,
+                                'created_at' => now(),
+                                'updated_at' => now(),
+                            ];
+                        }
+                    } catch (Exception $e) {
+                        $model->status(StatusEnum::failed());
+
+                        info($e);
+
+                        $this->markAsFailed($model, $e);
                     }
-                } catch (Exception $e) {
-                    $model->status(StatusEnum::failed());
-
-                    info($e);
-
-                    $this->markAsFailed($model, $e);
                 }
+
+                Video::insert($creates);
             }
 
-            info($creates);
+            if ($collection->last()) {
+                $model->update([
+                    'status' => StatusEnum::finished(),
+                    'prev_page_token' => null,
+                    'is_past_crawling_done' => true,
+                ]);
+            } else {
+                $model->update([
+                    'status' => StatusEnum::finished(),
+                    'prev_page_token' => $collection->prevPageToken(),
+                ]);
+            }
 
-            Video::insert($creates);
-
-            $model->setPublishedBeforeAt(end($creates)->published_at);
-
-            $model->status(StatusEnum::finished());
             $this->markAsFinished($model);
         }
 
