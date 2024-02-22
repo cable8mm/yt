@@ -1,5 +1,18 @@
 # Release Notes
 
+## 2024.02.2301 - 2024-02-22
+
+### What's Changed
+
+* Fix some bugs by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/48
+* Update packages by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/49
+* Performance up action by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/50
+* Fix video bugs by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/51
+* Change youtube crawling logic to use a pagetoken by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/52
+* Add subscribers in nova channels view by [@cable8mm](https://github.com/cable8mm) in https://github.com/cable8mm/yt/pull/53
+
+**Full Changelog**: https://github.com/cable8mm/yt/compare/2024.02.0818...2024.02.2301
+
 ## 2024.02.0818 - 2024-02-08
 
 ### What's Changed
