@@ -19,7 +19,7 @@ class VideosController extends Controller
             $videoModel = $videoModel->search($query);
         }
 
-        $videos = $videoModel->paginate(36);
+        $videos = $videoModel->active()->paginate(36);
 
         return view('videos.index', [
             'videos' => $videos,
