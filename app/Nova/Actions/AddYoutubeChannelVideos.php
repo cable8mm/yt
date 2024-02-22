@@ -57,6 +57,8 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
                             'duration' => $video->duration,
                             'license' => $video->license,
                             'published_at' => $video->published,
+                            'created_at' => now(),
+                            'updated_at' => now(),
                         ];
                     }
                 } catch (Exception $e) {
@@ -71,6 +73,8 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
             info($creates);
 
             Video::insert($creates);
+
+            $model->setPublishedBeforeAt(end($creates)->published_at);
 
             $model->status(StatusEnum::finished());
             $this->markAsFinished($model);
