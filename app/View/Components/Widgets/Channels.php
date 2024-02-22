@@ -17,7 +17,7 @@ class Channels extends Component
      */
     public function __construct()
     {
-        $this->channels = Channel::withCount('videos')->hasVideo()->active()->ordered()->get();
+        $this->channels = Channel::has('videos')->active()->ordered()->get();
     }
 
     /**

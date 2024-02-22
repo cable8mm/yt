@@ -14,7 +14,7 @@ class AppLayout extends Component
     public function render(): View
     {
         return view('layouts.app', [
-            'channels' => Channel::withCount('videos')->hasVideo()->active()->ordered()->get(),
+            'channels' => Channel::has('videos')->active()->ordered()->get(),
         ]);
     }
 }

@@ -25,7 +25,7 @@ class Page extends Model
 
     public function scopeOrdered(Builder $query): void
     {
-        $query->orderBy('name', 'asc');
+        $query->orderBy('title', 'asc');
     }
 
     public function scopeLocaled(Builder $query): void

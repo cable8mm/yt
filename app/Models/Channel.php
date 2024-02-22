@@ -44,22 +44,6 @@ class Channel extends Model
         $query->whereNotNull('youtube_published_before_at');
     }
 
-    /**
-     * MUST require withCount('videos')
-     */
-    public function scopeHasVideo(Builder $query): void
-    {
-        $query->where('videos_count', '>', 0);
-    }
-
-    /**
-     * MUST require withCount('videos')
-     */
-    public function scopeHasntVideo(Builder $query): void
-    {
-        $query->where('videos_count', 0);
-    }
-
     public function status(string $status): bool
     {
         return $this->update([

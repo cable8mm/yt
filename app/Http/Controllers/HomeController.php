@@ -10,9 +10,9 @@ class HomeController extends Controller
     public function index()
     {
         $videos = Video::active()->ordered()->paginate(20);
-        $feturedVideos = Video::active()->byLiveBroadCasting(false)->ordered()->take(10)->get();
-        $ongoingChannels = Channel::withCount('videos')->hasVideo()->active()->ordered()->get();
-        $futureChannels = Channel::withCount('videos')->hasntVideo()->active();
+        $feturedVideos = Video::active()->ordered()->take(10)->get();
+        $ongoingChannels = Channel::has('videos')->active()->ordered()->get();
+        $futureChannels = Channel::has('videos')->active();
 
         return view('home', [
             'videos' => $videos,
