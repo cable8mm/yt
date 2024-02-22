@@ -11,8 +11,8 @@ class HomeController extends Controller
     {
         $videos = Video::active()->ordered()->paginate(20);
         $feturedVideos = Video::active()->ordered()->take(10)->get();
-        $ongoingChannels = Channel::withCount('videos')->hasVideo()->active()->ordered()->get();
-        $futureChannels = Channel::withCount('videos')->hasntVideo()->active();
+        $ongoingChannels = Channel::has('videos')->active()->ordered()->get();
+        $futureChannels = Channel::has('videos')->active();
 
         return view('home', [
             'videos' => $videos,

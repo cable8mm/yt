@@ -26,7 +26,7 @@ class Search extends Component
 
         $this->channelId = $request->get('channel_id');
 
-        $this->partners = Channel::withCount('videos')->hasVideo()->active()->ordered()->get();
+        $this->partners = Channel::has('videos')->active()->ordered()->get();
     }
 
     /**
