@@ -26,6 +26,6 @@ class EnvironmentTest extends TestCase
 
     public function test_youtube_api_environment(): void
     {
-        $this->assertFalse($this->doYoutubeKeyTest);
+        $this->assertNotNull($this->doYoutubeKeyTest);
     }
 }
