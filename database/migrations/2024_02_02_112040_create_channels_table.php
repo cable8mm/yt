@@ -24,8 +24,11 @@ return new class extends Migration
             $table->string('medium_thumbnail_url')->nullable();
             $table->string('featured_image_url')->nullable();
             $table->string('status', 20)->default('ready')->comment('elements consists of ready, waiting, running, failed and finished');
+            $table->string('next_page_token', 20)->nullable();
+            $table->string('prev_page_token', 20)->nullable();
             $table->dateTime('youtube_published_after_at')->nullable()->comment('Match youtube api(v3) search.list publishedAfter parameter. If it set, it start crawing in the futer.');
             $table->timestamp('youtube_published_before_at')->nullable()->comment('Match youtube api(v3) search.list publishedAfter parameter. If it set, it start crawing for the past.');
+            $table->boolean('is_past_crawling_done')->default(false);
             $table->boolean('is_active')->default(false);
             $table->timestamps();
         });

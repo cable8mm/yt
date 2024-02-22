@@ -11,7 +11,6 @@ use App\Traits\NovaGeneralAuthorized;
 use Chaseconey\ExternalImage\ExternalImage;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -83,7 +82,10 @@ class Channel extends Resource
             ExternalImage::make('Thumbnail Url')
                 ->rules('max:191')
                 ->help('Auto filled after running the action.')
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->radius(8)
+                ->width(48)
+                ->height(48),
 
             Number::make('Videos Count', function () {
                 return $this->videos_count ?? 0;
@@ -112,12 +114,19 @@ class Channel extends Resource
                     $query->where($attribute, "{$value}%");
                 }),
 
-            DateTime::make('Youtube Published After At')
+            Text::make('Next Page Token')
                 ->help('Auto filled after running the action.')
                 ->exceptOnForms(),
 
-            DateTime::make('Youtube Published Before At')
-                ->help('If it is set, it will be crawling all videos automatically in the past.'),
+            Text::make('Prev Page Token')
+                ->help('If it is set, it will be crawling all videos automatically in the past.')
+                ->exceptOnForms(),
+
+            Boolean::make('Is Past Crawling Done')
+                ->rules('required')
+                ->hideWhenCreating()
+                ->exceptOnForms()
+                ->filterable(),
 
             Boolean::make('Is Active')
                 ->rules('required')
