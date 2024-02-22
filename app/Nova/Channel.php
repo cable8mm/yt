@@ -75,6 +75,13 @@ class Channel extends Resource
                 ->hideWhenCreating()
                 ->help('eg. https://www.youtube.com/@estellenglish'),
 
+            Text::make('Subscribers', function () {
+                $channelid = $this->channelid;
+
+                return '<img class="mt-2" alt="YouTube Channel Subscribers"
+                    src="https://img.shields.io/youtube/channel/subscribers/'.$channelid.'">';
+            })->asHtml(),
+
             Text::make('Name')
                 ->help('Auto filled after running the action.')
                 ->hideWhenCreating(),
