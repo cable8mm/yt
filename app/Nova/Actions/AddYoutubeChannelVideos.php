@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Enums\StatusEnum;
 use App\Models\Channel;
+use App\Models\Video;
 use App\Support\YoutubeVideoCollection;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -36,10 +37,15 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
                 $this->markAsFailed($model, $e);
             }
 
+            info($youtubeVideoCollection);
+
+            $creates = [];
+
             foreach ($youtubeVideoCollection as $video) {
                 try {
                     if ($model instanceof Channel) {
-                        $model->videos()->create([
+                        $creates[] = [
+                            'channel_id' => $model->id,
                             'videoid' => $video->id,
                             'title' => $video->title,
                             'description' => $video->description,
@@ -51,14 +57,20 @@ class AddYoutubeChannelVideos extends Action implements ShouldQueue
                             'duration' => $video->duration,
                             'license' => $video->license,
                             'published_at' => $video->published,
-                        ]);
+                        ];
                     }
                 } catch (Exception $e) {
                     $model->status(StatusEnum::failed());
 
+                    info($e);
+
                     $this->markAsFailed($model, $e);
                 }
             }
+
+            info($creates);
+
+            Video::insert($creates);
 
             $model->status(StatusEnum::finished());
             $this->markAsFinished($model);
