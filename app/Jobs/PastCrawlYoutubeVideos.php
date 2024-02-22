@@ -51,7 +51,7 @@ class PastCrawlYoutubeVideos implements ShouldQueue
         try {
             DB::beginTransaction();
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($this->channel->channelid, $this->channel->youtube_published_before_at)->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByFrom($this->channel->channelid, $this->channel->youtube_published_before_at)->fetch()->get();
 
             if (empty($youtubeVideoCollection)) {
                 $this->channel->pastCrawlEnd();

@@ -49,7 +49,7 @@ class FutureCrawlYoutubeVideos implements ShouldQueue
         try {
             DB::beginTransaction();
 
-            $youtubeVideoCollection = YoutubeVideoCollection::makeByTo($$this->channel->channelid, $$this->channel->youtube_published_after_at)->fetchOnce()->get();
+            $youtubeVideoCollection = YoutubeVideoCollection::makeByTo($$this->channel->channelid, $$this->channel->youtube_published_after_at)->fetch()->get();
 
             if (empty($youtubeVideoCollection)) {
                 $$this->channel->futureCrawlEnd(now());
