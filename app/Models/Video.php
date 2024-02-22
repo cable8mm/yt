@@ -82,6 +82,6 @@ class Video extends Model
      */
     public function shouldBeSearchable(): bool
     {
-        return $this->is_active;
+        return isset($this->is_active) && $this->is_active === true;
     }
 }

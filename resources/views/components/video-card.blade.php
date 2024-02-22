@@ -6,7 +6,8 @@
     </a>
     <div class="px-2 my-2 lg:my-5 line-clamp-2 lg:line-clamp-3">
         <a href="{{ route('video.show', $item->id) }}">
-            <h5 class="mb-2 tracking-tight text-gray-900 dark:text-white">{!! $item->title !!}</h5>
+            <h5 class="mb-2 tracking-tight text-gray-900 dark:text-white line-clamp-2">{!! $item->title !!}</h5>
+            <p class="text-sm">Published : {!! $item->published_at->diffForHumans() !!}</p>
         </a>
     </div>
 </div>
