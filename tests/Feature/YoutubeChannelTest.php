@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class YoutubeChannelTest extends TestCase
 {
-    public function test_factory_makeById(): void
+    public function test_factory_make_by_id(): void
     {
         if (config('yt.do_youtube_key_test')) {
             $channelId = ChannelSeeder::$seedChannelId;
@@ -22,7 +22,7 @@ class YoutubeChannelTest extends TestCase
         }
     }
 
-    public function test_factory_makeByVideo(): void
+    public function test_factory_make_by_video(): void
     {
         if (config('yt.do_youtube_key_test')) {
             $videoId = ChannelSeeder::$seedVideoId;
