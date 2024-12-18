@@ -27,7 +27,7 @@ class ImportChannelExcelAction extends Action
     {
         foreach ($models as $model) {
             try {
-                Excel::import(new ChannelImport(), $model->attachment, config('yt.storage'));
+                Excel::import(new ChannelImport, $model->attachment, config('yt.storage'));
 
                 $model->status = StatusEnum::finished();
                 $model->save();

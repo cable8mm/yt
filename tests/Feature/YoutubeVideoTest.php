@@ -12,7 +12,7 @@ class YoutubeVideoTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_factory_makeByUrl(): void
+    public function test_factory_make_by_url(): void
     {
         if (config('yt.do_youtube_key_test')) {
             $url = ChannelSeeder::$featuredVideoUrl;
@@ -25,7 +25,7 @@ class YoutubeVideoTest extends TestCase
         }
     }
 
-    public function test_factory_makeById(): void
+    public function test_factory_make_by_id(): void
     {
         if (config('yt.do_youtube_key_test')) {
             $videoId = ChannelSeeder::$seedVideoId;

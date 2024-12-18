@@ -130,8 +130,8 @@ class ImportFile extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            (new ImportChannelExcelAction())->showInline(),
-            (new ImportVideoChannelExcelAction())->showInline(),
+            (new ImportChannelExcelAction)->showInline(),
+            (new ImportVideoChannelExcelAction)->showInline(),
         ];
     }
 }

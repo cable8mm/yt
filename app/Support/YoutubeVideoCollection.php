@@ -58,7 +58,7 @@ class YoutubeVideoCollection implements Countable, Iterator
     public function __construct(string $channelId, ?Carbon $from = null, ?Carbon $to = null, ?string $prevPageToken = null)
     {
         if ($from == null && $to == null) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException;
         }
 
         $this->channelId = $channelId;

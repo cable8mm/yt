@@ -24,7 +24,7 @@ class YoutubeVideo implements ArrayAccess
         $videoId = $video->id->videoId ?? $video->id;
 
         if (empty($videoId)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException;
         }
 
         $tags = isset($video->snippet->tags) ? implode(',', $video->snippet->tags) : null;

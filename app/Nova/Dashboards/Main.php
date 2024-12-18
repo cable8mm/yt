@@ -17,9 +17,9 @@ class Main extends Dashboard
     public function cards()
     {
         return [
-            new NewVideos(),
-            new VideosPerDay(),
-            new VideosPerChannel(),
+            new NewVideos,
+            new VideosPerDay,
+            new VideosPerChannel,
         ];
     }
 }

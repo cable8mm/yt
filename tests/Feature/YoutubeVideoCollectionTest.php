@@ -24,7 +24,7 @@ class YoutubeVideoCollectionTest extends TestCase
         }
     }
 
-    public function test_fetchOne(): void
+    public function test_fetch_one(): void
     {
         if (config('yt.do_youtube_key_test')) {
             $channelId = ChannelSeeder::$seedChannelId;

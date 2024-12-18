@@ -13,7 +13,7 @@ class VideosController extends Controller
         $query = $request->input('query');
         $channelId = $request->input('channel_id');
 
-        $videoModel = empty($channelId) ? new Video() : Video::where('channel_id', $channelId);
+        $videoModel = empty($channelId) ? new Video : Video::where('channel_id', $channelId);
 
         if (! empty($query)) {
             $videoModel = $videoModel->search($query);

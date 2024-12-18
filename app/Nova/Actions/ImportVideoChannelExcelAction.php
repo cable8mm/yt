@@ -28,7 +28,7 @@ class ImportVideoChannelExcelAction extends Action implements ShouldQueue
     {
         foreach ($models as $model) {
             try {
-                Excel::import(new VideoChannelImport(), $model->attachment, config('yt.storage'));
+                Excel::import(new VideoChannelImport, $model->attachment, config('yt.storage'));
 
                 $model->status = StatusEnum::finished();
                 $model->save();
