@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "blade-ui-kit/blade-heroicons": "^2.2",
         "cable8mm/laravel-validation-kisa-rules": "^0.9.0",
         "cable8mm/youtube": "^4.0",
