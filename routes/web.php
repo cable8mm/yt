@@ -39,7 +39,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::middleware(['auth'])->group(function () {
-        Route::redirect('settings', 'settings/profile')->name('profile');
+        Route::redirect('settings', 'settings/profile');
 
         Route::get('settings/profile', Profile::class)->name('profile.edit');
         Route::get('settings/password', Password::class)->name('settings.password');
