@@ -3,9 +3,13 @@
 use App\Http\Controllers\ChannelsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideosController;
+use App\Livewire\Settings\Appearance;
+use App\Livewire\Settings\Password;
+use App\Livewire\Settings\Profile;
+use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -18,6 +22,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -32,10 +38,23 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::middleware('auth')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware(['auth'])->group(function () {
+        Route::redirect('settings', 'settings/profile');
+
+        Route::get('settings/profile', Profile::class)->name('profile.edit');
+        Route::get('settings/password', Password::class)->name('settings.password');
+        Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+
+        Route::get('settings/two-factor', TwoFactor::class)
+            ->middleware(
+                when(
+                    Features::canManageTwoFactorAuthentication()
+                        && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
+                    ['password.confirm'],
+                    [],
+                ),
+            )
+            ->name('two-factor.show');
     });
 });
 
