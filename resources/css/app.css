@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+
 @import "../../vendor/livewire/flux/dist/flux.css";
 
 @source "../views";
