@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Channel;
+use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -11,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 class VideoChannelImport implements SkipsEmptyRows, ToModel, WithHeadingRow, WithValidation
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return Model|null
      */
     public function model(array $row)
     {

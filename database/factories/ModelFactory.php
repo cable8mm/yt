@@ -12,9 +12,10 @@
 */
 
 use App\Models\User;
+use Faker\Generator;
 use Illuminate\Support\Str;
 
-$factory->define(User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Generator $faker) {
     static $password;
 
     return [

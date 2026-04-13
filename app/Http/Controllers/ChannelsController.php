@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Video;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class ChannelsController extends Controller
@@ -11,7 +12,7 @@ class ChannelsController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {

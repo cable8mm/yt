@@ -4,10 +4,11 @@ namespace Database\Factories;
 
 use App\Enums\LocaleEnum;
 use App\Enums\MindRuleEnum;
+use App\Models\Mind;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Mind>
+ * @extends Factory<Mind>
  */
 class MindFactory extends Factory
 {

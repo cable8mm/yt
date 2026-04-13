@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Enums\LocaleEnum;
+use App\Models\Page;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Page>
+ * @extends Factory<Page>
  */
 class PageFactory extends Factory
 {
